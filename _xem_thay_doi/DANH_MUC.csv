@@ -1,0 +1,11 @@
+﻿Dòng,Loại chi,Nhóm,Từ khóa nhận diện (cho AI),Người chi,Nguồn,Trạng thái,Chu kỳ
+5,Dầu,Biến đổi,"dầu, DO, đổ dầu, xăng, cây xăng, petrolimex, lít",Tài xế,Ảnh,Đã xác nhận,Tháng
+6,Sửa chữa,Biến đổi,"sửa, thay, hàn, gara, phụ tùng, má phanh, bơm, sửa xe, phanh, ốp, linh tinh",Chủ xe,Tin nhắn,Cần kiểm tra,Năm
+7,Lốp,Biến đổi,"lốp, vỏ, ruột, vá lốp, đắp lốp, cân lốp, làm lốp",,Cả hai,,
+8,Bảo dưỡng - nhớt,Biến đổi,"nhớt, thay nhớt, bảo dưỡng, lọc dầu, lọc gió",,,,
+9,Phí BOT - cầu đường,Biến đổi,"BOT, trạm, phí đường, vé cầu, ETC, VETC, ePass",,,,
+10,CSGT - phạt,Biến đổi,"CS, CSGT, công an, phạt, biên bản, cò",,,,
+11,Ăn uống - công tác,Biến đổi,"ăn, cơm, nghỉ, nhà nghỉ, công tác phí",,,,
+12,Bốc xếp,Biến đổi,"bốc, xếp, bốc xếp, bốc vác",,,,
+13,Rửa xe - vệ sinh,Biến đổi,"rửa xe, vệ sinh",,,,
+14,Khác,Biến đổi,không xác định được loại,,,,

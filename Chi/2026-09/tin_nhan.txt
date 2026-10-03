@@ -1,0 +1,21 @@
+# Tin nhắn chi phí tháng 2026-09 – copy từ nhóm Zalo, dán vào CUỐI file.
+# Nên giữ cả dòng tên người gửi + giờ để biết ngày.
+# Ví dụ:
+#   [08:15 05/09] Tài xế: đổ dầu 2tr150 100L km 152300
+#   [17:40 05/09] Tài xế: CS 200k
+
+=== ĐÃ NHẬP ĐẾN ĐÂY ===
+# [03/10/2026] Chủ xe nhập thô qua Claude:
+1. 1/9 cân lốp 100k
+2. 7/9 làm lốp 600k
+3. 6/9 dầu 7tr
+4. 15/9 dầu 9tr8
+5. 18/9 suawrxe linh tinh 390k
+21/9 dầu 8tr2
+6. 23/9 hàn ốp (sửa xe) 250k
+7. 25/9 sửa xe 250k
+8. 26 dầu  5tr5
+9. 27 sửa phanh 1tr1
+10. 30/9 dầu 9tr9
+
+=== ĐÃ NHẬP ĐẾN ĐÂY ===
