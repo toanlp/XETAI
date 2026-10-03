@@ -22,7 +22,8 @@ Sang tháng mới, tạo thêm thư mục `Chi/<năm-tháng>/` có cấu trúc n
 1. Trên Zalo PC, mở nhóm chat và chọn các ảnh hóa đơn mới, chọn **Lưu về máy** vào `Chi/<năm-tháng>/anh/`.
 2. Copy các tin nhắn có nói đến chi phí, dán vào **cuối** file `Chi/<năm-tháng>/tin_nhan.txt`.
 3. Mở Claude và nhắn: **"cập nhật chi tuần này"**.
-4. Mở file Excel, sheet CHI, xem các dòng tô **cam** (Cần kiểm tra). Kiểm tra xong thì đổi thành *Đã xác nhận*.
+4. Mở file Excel, sheet CHI, xem các dòng tô **cam** (Ghi chú bắt đầu bằng "Cần kiểm tra"). Kiểm tra xong thì xóa chữ đó ở Ghi chú.
+5. Muốn xem Claude vừa sửa gì: trong VS Code mở **Source Control** (`Ctrl+Shift+G`), bấm vào file trong `_xem_thay_doi/`.
 
 ## Đầu tháng (chốt tháng trước)
 
@@ -30,8 +31,8 @@ Sang tháng mới, tạo thêm thư mục `Chi/<năm-tháng>/` có cấu trúc n
 2. Xem sheet **TONG_HOP**: chọn năm và tháng ở ô vàng.
 3. Claude soạn sẵn tin tóm tắt chi trong tháng, bạn gửi vào nhóm Zalo để tài xế xác nhận.
 
-## Thiết lập một lần
+## File Excel (3 sheet)
 
-- Sheet **CHI_CO_DINH**: điền số tiền lương cứng, trả góp, bảo hiểm, đăng kiểm, phí đường bộ, GPS.
-- Sheet **TAM_UNG**: nếu có đưa tiền trước cho tài xế, ghi mỗi lần đưa.
-- Sheet **CHI** dòng 5 là **dòng ví dụ**, xóa khi bắt đầu nhập thật.
+- **TONG_HOP**: chọn năm, tháng ở ô vàng để xem thu, chi, lãi; bảng và biểu đồ 12 tháng.
+- **THU**: mỗi chuyến 1 dòng (Ngày, Phiếu, Tấn, Đơn giá, Nguồn). Thành tiền tự tính.
+- **CHI**: mỗi khoản 1 dòng (Ngày, Loại chi, Nội dung, Số tiền, Ghi chú). Loại chi gồm Dầu, Sửa chữa, Khác. Đăng kiểm, bảo hiểm... trả tháng nào thì ghi vào tháng đó, loại Khác.

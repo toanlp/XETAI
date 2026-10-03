@@ -26,7 +26,7 @@ Xe 75A-40008/
 ├── QuanLyXe_75A40008.xlsx   ← file dữ liệu chính
 ├── Thu/                     ← file thu kế toán gửi, giữ nguyên tên kế toán đặt (vd "trạm hương giang tháng 9.2026.xlsx")
 ├── _cong_cu/xuat_csv.py     ← xuất các sheet ra CSV để xem thay đổi
-├── _xem_thay_doi/*.csv      ← bản CSV của THU, CHI, CHI_CO_DINH, TAM_UNG, DANH_MUC (chỉ cột nhập tay)
+├── _xem_thay_doi/*.csv      ← bản CSV của THU, CHI (chỉ cột nhập tay)
 └── Chi/
     └── yyyy-mm/
         ├── anh/             ← ảnh hóa đơn lưu từ Zalo
@@ -35,22 +35,22 @@ Xe 75A-40008/
 
 ## 3. Cấu trúc file Excel `QuanLyXe_75A40008.xlsx`
 
-**Quy ước màu chữ:** xanh dương là ô nhập tay, đen là công thức. **Không được ghi đè công thức.**
+**Chủ xe muốn file gọn (03/10/2026):** chỉ 3 sheet (TONG_HOP, THU, CHI), ít cột. Không thêm cột/sheet khi chưa hỏi chủ xe.
+**Giữ kiểu trình bày** (chủ xe thích): font Arial; hàng 1 tiêu đề, hàng 2 ghi chú nghiêng, hàng 3 dòng TỔNG (nền xanh lá), hàng 4 tiêu đề cột (nền xanh đậm, chữ trắng), dữ liệu hàng 5–1004. **Chữ xanh dương = ô nhập tay, chữ đen = công thức, không ghi đè.** Khi sửa file phải giữ nguyên định dạng này; dựng lại thì dùng `_cong_cu/tao_file_gon.py`.
 
-| Sheet | Hàng tiêu đề | Dữ liệu | Cột nhập tay | Cột công thức |
-|---|---|---|---|---|
-| TONG_HOP | – | – | C4 = Năm, C5 = Tháng | Phần còn lại; bảng 12 tháng ở F9:J22, biểu đồ đặt tại F25 |
-| THU | 4 | 5–1004 | A STT, B Ngày, C Phiếu, D Số xe, E Xuất bãi, F Hàng trừ, H Đơn giá, K Nguồn / Ghi chú | G Còn lại, I Thành tiền, J Tháng |
-| CHI | 4 | 5–1004 | A STT, B Ngày, D Số xe, E Loại chi, G Nội dung, H Số lít, I Đơn giá, J Số tiền, K Km, L Người chi, M Nguồn, N File chứng từ, O Trạng thái, P Ghi chú | C Tháng, F Nhóm |
-| CHI_CO_DINH | 4 | 5–34 | A–E, G | F Tiền/tháng (khoản theo năm thì chia 12) |
-| TAM_UNG | 4 | 5–504 | A Ngày, C Số tiền, D Hình thức, E Ghi chú | B Tháng |
-| DANH_MUC | 4 | 5–19 | A Loại chi, B Nhóm, C Từ khóa; E–H là các danh sách chọn | – |
-| HUONG_DAN | – | – | – | – |
+| Sheet | Cột | Ghi chú |
+|---|---|---|
+| TONG_HOP | C4 Năm, C5 Tháng (ô vàng), C6 kỳ báo cáo; THU B8:C11, CHI B13:D17 (Dầu 14, Sửa chữa 15, Khác 16, TỔNG CHI 17), LỢI NHUẬN 19, CHỈ SỐ 21–24; bảng 12 tháng F9:J22; biểu đồ F24 | Ẩn lưới. Toàn công thức, lọc theo khoảng ngày (`SUMIFS` với `>=đầu tháng`, `<đầu tháng sau`). Cột D = % doanh thu |
+| THU | A Ngày, B Phiếu, C Tấn, D Đơn giá, **E Thành tiền (công thức)**, F Nguồn / Ghi chú | Tấn = xuất bãi − hàng trừ |
+| CHI | A Ngày, B Loại chi (chọn Dầu / Sửa chữa / Khác), C Nội dung, D Số tiền, E Ghi chú | E3 đếm "Cần kiểm tra". Ghi chú bắt đầu bằng "Cần kiểm tra" thì dòng tô cam |
+
+Từ khóa phân loại nằm trong `QUY_TAC_NHAP_LIEU.md` mục 6 (không còn sheet DANH_MUC). `_cong_cu/tao_file_gon.py` là script đã dựng file này, xem khi cần sửa công thức TONG_HOP.
 
 **Cách thao tác kỹ thuật với file:**
 
 - Sửa bằng `openpyxl`, mở theo chế độ mặc định để giữ nguyên công thức. **Không lưu file sau khi mở bằng `data_only=True`.**
-- Python: `%LOCALAPPDATA%\Programs\Python\Python312\python.exe` (lệnh `python` trong PATH là lối tắt Store, không dùng được). Máy không có LibreOffice nên không chạy được `recalc.py`; công thức sẽ tự tính khi chủ xe mở bằng Excel.
+- Python: `%LOCALAPPDATA%\Programs\Python\Python312\python.exe` (lệnh `python` trong PATH là lối tắt Store, không dùng được).
+- **Kiểm tra công thức:** máy có Excel nên dùng COM qua PowerShell (`New-Object -ComObject Excel.Application`, ẩn) mở **bản sao trong scratchpad**, `CalculateFull()`, đọc `.Text` của ô kết quả. Không có LibreOffice nên không chạy được `recalc.py`.
 - Trước khi ghi, kiểm tra file khóa `~$QuanLyXe_75A40008.xlsx`. Nếu có thì Excel đang mở file, nhắc chủ xe đóng lại. Sao lưu file vào scratchpad trước khi sửa.
 
 **Quy trình xem thay đổi (chủ xe chọn ngày 03/10/2026):** chủ xe xem thay đổi bằng CSV + git trong VS Code (Source Control).
@@ -59,7 +59,7 @@ Xe 75A-40008/
 2. Sửa Excel.
 3. **Sau khi sửa:** chạy `_cong_cu/xuat_csv.py`, **không commit**, để chủ xe mở Source Control xem các dòng thêm/sửa trong `_xem_thay_doi/*.csv`.
 4. Nếu sửa cấu trúc sheet (thêm cột, đổi dòng tiêu đề), cập nhật luôn bảng `SHEETS` trong `xuat_csv.py`.
-- Thêm dòng mới ngay sau dòng cuối đang có dữ liệu ở cột B. Nếu dữ liệu sắp vượt dòng 1004, cần kéo dài công thức và vùng danh sách chọn xuống dưới.
+- Thêm dòng mới ngay sau dòng cuối đang có Ngày ở cột A (từ hàng 5). Chỉ ghi giá trị, ô đã có sẵn định dạng. Nếu dữ liệu sắp vượt dòng 1004, kéo dài công thức THU!E, định dạng, danh sách chọn, định dạng có điều kiện của CHI và các vùng `$5:$1004` trong TONG_HOP.
 
 ## 4. Các yêu cầu chủ xe hay dùng
 
@@ -67,7 +67,7 @@ Xe 75A-40008/
 |---|---|
 | "cập nhật chi tuần này" / "cập nhật chi tháng X" | Làm theo `QUY_TAC_NHAP_LIEU.md` mục 2, rồi báo số khoản mới, tổng tiền và các dòng cần kiểm tra |
 | "chốt tháng X" | Nhập thu từ `Thu/`, rà soát bất thường, soạn tin tóm tắt để gửi nhóm Zalo (mục 8 của QUY_TAC) |
-| Gửi file chi cố định / tạm ứng cuối tháng | Cập nhật CHI_CO_DINH và TAM_UNG theo QUY_TAC mục 7 |
+| Gửi file đăng kiểm, bảo hiểm… cuối tháng | Nhập từng khoản vào CHI, loại Khác (QUY_TAC mục 7) |
 | "tạo tháng mới" | Tạo `Chi/yyyy-mm/anh/` và `tin_nhan.txt`, copy nội dung từ file mẫu của tháng trước |
 | Hỏi số liệu | Đọc file Excel (stage lên rồi đọc bằng `data_only=True`, chỉ đọc, không lưu) và trả lời |
 
@@ -77,7 +77,7 @@ Xe 75A-40008/
 
 - Tài xế đổi cách viết, chẳng hạn "500" nay nghĩa là 500k, dùng từ lóng mới, hoặc viết tắt mới.
 - Xuất hiện loại ảnh mới: hóa đơn điện tử, ảnh chụp màn hình chuyển khoản, phiếu viết tay, biên bản.
-- Có loại chi mới. Khi đó thêm vào DANH_MUC trong Excel và bổ sung từ khóa.
+- Có loại chi mới. Làm theo QUY_TAC mục 6 (bảng từ khóa, danh sách chọn, dòng ở TONG_HOP).
 - Chủ xe sửa lại một dòng Claude đã nhập. Phải hỏi hoặc tự rút ra lý do, rồi ghi thành quy tắc.
 - Đổi tài xế, có thêm xe, hoặc đổi cách lưu ảnh và tin nhắn.
 - Kế toán đổi mẫu file thu (thứ tự cột, thêm cột).
@@ -96,14 +96,14 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 *Cập nhật lần cuối: 03/10/2026*
 
 - [x] Dựng thư mục, file Excel, hướng dẫn và quy tắc nhập liệu.
-- [x] Đã xóa dòng ví dụ. CHI có 11 dòng chi tháng 9 (dòng 5–15, tổng 43.090.000 đ) do chủ xe nhập thô, chưa có ảnh chứng từ.
+- [x] File Excel đã làm gọn (3 sheet). CHI có 11 dòng chi tháng 9 (dòng 5–15): Dầu 40.400.000, Sửa chữa 2.690.000, tổng 43.090.000 đ. Chủ xe nhập thô, chưa có ảnh chứng từ.
 - [x] THU tháng 9: 20 chuyến trạm Hương Giang (696,6 tấn, 50.851.800 đ) + 1 dòng gộp 9 chuyến không rõ ngày (22,4 tấn × 13.000 = 291.200 đ). Tổng thu T9: 51.143.000 đ.
-- [ ] CHI_CO_DINH và TAM_UNG đang trống. Cuối tháng chủ xe sẽ gửi file riêng để cập nhật, chưa biết mẫu file.
+- [x] Không có chi cố định riêng: đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh. Không theo dõi tạm ứng.
 - [x] Đã cài Python 3.12 và openpyxl tại `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`. Lệnh `python` trong PATH vẫn trỏ vào lối tắt Store, và máy không có `py`, nên luôn gọi Python theo đường dẫn đầy đủ.
 - [ ] Chưa chạy thử với ảnh và tin nhắn Zalo thật của tháng 9.
 - [ ] Chưa đặt tác vụ tự chạy hằng tuần. Dự định làm sau 2–3 tuần chạy ổn, vào tối Chủ nhật, và cần máy tính đang bật.
 
-**Việc tiếp theo:** chờ chủ xe gửi thêm thu tháng 9 (nguồn khác) và file chi cố định/tạm ứng, sau đó chốt lại tháng 9. Tháng 10 chủ xe sẽ nhập chi thô như tháng 9.
+**Việc tiếp theo:** chờ chủ xe gửi thêm thu/chi tháng 9 nếu có, sau đó chốt lại tháng 9. Tháng 10 chủ xe sẽ nhập chi thô như tháng 9.
 
 ## 7. Nhật ký thay đổi
 
@@ -114,3 +114,6 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 03/10/2026 | Nhập 11 khoản chi tháng 9. QUY_TAC: thêm nguồn "chủ xe nhập thô", bỏ ngưỡng 5tr với dầu (thay bằng ngưỡng 12tr/lần). DANH_MUC: thêm từ khóa cân lốp, làm lốp, sửa xe, phanh, ốp, linh tinh | Chủ xe gửi danh sách chi tháng 9; dầu 5–10tr/lần là bình thường
 | 03/10/2026 | Nhập thu tháng 9 (20 chuyến) từ file trạm Hương Giang. Thu có thể nhiều file/nguồn. Bỏ tính tiêu hao dầu; dầu tính theo ngày đổ. Thêm `_cong_cu/xuat_csv.py` + `_xem_thay_doi/` + git để chủ xe xem thay đổi trong VS Code | Chủ xe trả lời rà soát tháng 9 và muốn xem được thay đổi |
 | 03/10/2026 | Gộp loại Lốp vào Sửa chữa (CHI + DANH_MUC). THU thêm cột K "Nguồn / Ghi chú"; thêm dòng 9 chuyến không rõ ngày (22,4 tấn, 13.000 đ/tấn) | Chủ xe: lốp thuộc sửa xe; có thu nguồn khác không rõ ngày |
+| 03/10/2026 | Làm gọn Excel: 7 sheet → 4 (TONG_HOP, THU, CHI, CO_DINH). Bỏ DANH_MUC, TAM_UNG, HUONG_DAN; CHI còn 5 cột, THU còn 6 cột; bỏ cột Tháng (TONG_HOP lọc theo khoảng ngày). Loại chi: Dầu / Sửa chữa / Khác (lốp, nhớt, rửa xe vào Sửa chữa). "Cần kiểm tra" chuyển thành tiền tố ở Ghi chú | Chủ xe thấy file quá chi tiết, muốn gọn |
+| 03/10/2026 | Bỏ luôn sheet CO_DINH (còn 3 sheet). Đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh, loại Khác | Chủ xe: không có phí cố định, phát sinh tháng nào ghi tháng đó |
+| 03/10/2026 | Dựng lại bản gọn với kiểu trình bày của bản cũ (Arial, tiêu đề/TỔNG/tiêu đề cột ở hàng 1–4, chữ xanh nhập tay, khối màu ở TONG_HOP, % DT, chỉ số /tấn) | Chủ xe chê bản gọn đầu tiên xấu |

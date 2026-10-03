@@ -1,7 +1,7 @@
-# QUY TẮC NHẬP LIỆU CHI PHÍ (dành cho Claude)
+# QUY TẮC NHẬP LIỆU (dành cho Claude)
 
-Tài liệu này mô tả cách Claude đọc ảnh và tin nhắn Zalo rồi ghi vào sheet **CHI** của `QuanLyXe_75A40008.xlsx`.
-Khi được nhờ "cập nhật chi", Claude làm đúng theo các bước dưới đây.
+Tài liệu này mô tả cách Claude đọc ảnh, tin nhắn Zalo và file thu rồi ghi vào `QuanLyXe_75A40008.xlsx`.
+Cấu trúc file Excel xem ở README mục 3. **Chủ xe muốn file gọn**: không thêm cột hay sheet mới khi chưa hỏi chủ xe.
 
 ## 1. Nguồn dữ liệu
 
@@ -12,16 +12,16 @@ Khi được nhờ "cập nhật chi", Claude làm đúng theo các bước dư�
 | Danh sách chủ xe gõ thô trong chat với Claude | Claude dán nguyên văn vào `Chi/<yyyy-mm>/tin_nhan.txt` (kèm dòng `# [ngày] Chủ xe nhập thô`) trước khi xử lý, để còn đối chiếu |
 | File thu của kế toán | `Thu/` |
 
-## 2. Các bước xử lý
+## 2. Các bước "cập nhật chi"
 
-1. **Đọc sheet CHI** để lấy danh sách file trong cột *File chứng từ* và các dòng đã có. Ảnh nào đã có tên trong cột này thì **bỏ qua**.
-2. **Đọc từng ảnh mới** và lấy ra: ngày, số tiền, số lít, đơn giá, nơi phát sinh, km đồng hồ (nếu có).
+1. **Đọc sheet CHI.** Ảnh nào đã có trong cột Ghi chú (dạng `Ảnh: 2026-10/anh/IMG_0012.jpg`) thì **bỏ qua**.
+2. **Đọc từng ảnh mới** và lấy ra ngày, số tiền, nơi phát sinh.
 3. **Đọc tin nhắn mới** trong `tin_nhan.txt` (phần nằm sau dòng `=== ĐÃ NHẬP ĐẾN ĐÂY ===`).
-4. **Phân loại** theo cột *Từ khóa nhận diện* ở sheet DANH_MUC. Chỉ nhập các loại chi nằm trong phạm vi ở mục 6. Khoản nào có vẻ là chi cho xe nhưng không khớp từ khóa thì xếp vào loại `Khác` và đặt Trạng thái `Cần kiểm tra`. Khoản nào nằm ngoài phạm vi thì không nhập, chỉ báo lại cho chủ xe.
-5. **Chống trùng:** khoản trong tin nhắn và khoản trong ảnh có cùng ngày (lệch tối đa ±1 ngày), cùng loại và cùng số tiền thì chỉ ghi **1 dòng**, cột Nguồn ghi `Cả hai`.
-6. **Ghi vào CHI:** thêm dòng mới ngay sau dòng cuối đang có dữ liệu. Chỉ ghi vào các ô nhập tay (chữ xanh), không sửa công thức ở cột C và F.
+4. **Phân loại** theo bảng ở mục 6. Khoản không rõ là gì thì xếp vào `Khác` và đánh dấu Cần kiểm tra. Khoản không liên quan đến xe thì không nhập, chỉ báo lại cho chủ xe.
+5. **Chống trùng:** khoản trong tin nhắn và khoản trong ảnh có cùng ngày (lệch tối đa ±1 ngày), cùng loại và cùng số tiền thì chỉ ghi **1 dòng**, kèm `Ảnh: …` ở Ghi chú.
+6. **Ghi vào CHI:** thêm dòng mới ngay sau dòng cuối đang có Ngày, sắp theo ngày.
 7. **Đánh dấu đã nhập:** chèn lại dòng `=== ĐÃ NHẬP ĐẾN ĐÂY ===` vào cuối file `tin_nhan.txt`.
-8. **Báo lại cho chủ xe:** số khoản mới, tổng tiền, các dòng `Cần kiểm tra` kèm lý do.
+8. **Báo lại cho chủ xe:** số khoản mới, tổng tiền theo loại, các dòng Cần kiểm tra kèm lý do.
 
 ## 3. Cách hiểu số tiền viết tắt
 
@@ -32,72 +32,75 @@ Khi được nhờ "cập nhật chi", Claude làm đúng theo các bước dư�
 | 2tr150 | 2.150.000 |
 | 1,5 củ | 1.500.000 |
 
-Số tiền dưới 1.000 mà không có đơn vị thì hiểu là **nghìn đồng**. Nếu không chắc, đặt Trạng thái `Cần kiểm tra`.
+Số tiền dưới 1.000 mà không có đơn vị thì hiểu là **nghìn đồng**. Nếu không chắc thì đánh dấu Cần kiểm tra.
 
 **Chủ xe nhập thô** theo dạng `<ngày> <nội dung> <số tiền>`, có thể đánh số hoặc không, có thể gõ sai chính tả (ví dụ "suawrxe" là "sửa xe"):
 - Chỉ ghi ngày, ví dụ `26`, thì hiểu là ngày 26 của tháng đang nhập.
-- Khoản do chủ xe tự liệt kê: Trạng thái `Đã xác nhận`, Nguồn `Tin nhắn`, Người chi `Tài xế`, Ghi chú `Chủ xe nhập thô <ngày nhập>`.
-- Sắp xếp các dòng theo ngày trước khi ghi vào CHI.
+- Khoản do chủ xe tự liệt kê thì coi là đã xác nhận, để trống Ghi chú.
 
-## 4. Đặt Trạng thái "Cần kiểm tra" khi
+## 4. Đánh dấu "Cần kiểm tra"
 
+Cách đánh dấu: cột Ghi chú **bắt đầu bằng** `Cần kiểm tra: <lý do>`. Excel sẽ tự tô cam cả dòng. Chủ xe kiểm tra xong thì xóa chữ đó đi.
+
+Đánh dấu khi:
 - Ảnh mờ, không đọc được số tiền hoặc ngày.
 - Số tiền trong tin nhắn khác số tiền trên ảnh của cùng một khoản.
-- Một khoản **không phải dầu** lớn hơn 5.000.000 đ. Dầu thường 5–10 triệu mỗi lần đổ nên không áp ngưỡng này.
+- Một khoản **không phải dầu** lớn hơn 5.000.000 đ.
 - Một lần đổ dầu lớn hơn 12.000.000 đ. **Không** tính mức tiêu hao (lít/km) hay đơn giá dầu, chủ xe không cần.
 - Không xác định được loại chi.
-- Không có ngày: lấy ngày của tin nhắn hoặc ngày chụp ảnh và ghi chú lại.
+- Không có ngày: lấy ngày của tin nhắn hoặc ngày chụp ảnh, ghi rõ ở Ghi chú.
 
-Các trường hợp còn lại để Trạng thái `Đã xác nhận`.
+## 5. Ghi chú (cột E của CHI)
 
-## 5. Giá trị mặc định
+- Để trống nếu không có gì đặc biệt. **Không** ghi số xe, người chi, nguồn hay ngày nhập.
+- Có ảnh chứng từ thì ghi `Ảnh: <yyyy-mm>/anh/<tên file>`.
+- Chủ xe trả trực tiếp (không phải tài xế) thì ghi `Chủ xe trả`.
 
-- Số xe: `75A 40008`
-- Người chi: `Tài xế`, trừ khi tin nhắn ghi rõ chủ xe trả hoặc chuyển khoản trực tiếp.
-- File chứng từ: đường dẫn tương đối, ví dụ `2026-10/anh/IMG_0012.jpg`.
+## 6. Loại chi – chỉ chi phí của xe
 
-## 6. Phạm vi sheet CHI – chỉ chi phí của xe
+Danh sách chọn ở cột B của CHI nằm trong data validation (`"Dầu,Sửa chữa,Khác"`).
 
-Hiện tại sheet CHI **chỉ ghi các khoản chi trực tiếp cho xe**:
-
-| Loại chi đang dùng (đúng tên trong DANH_MUC) | Ví dụ |
+| Loại chi | Từ khóa nhận diện |
 |---|---|
-| Dầu | đổ dầu, phiếu dầu, hóa đơn cây xăng |
-| Sửa chữa | sửa, hàn, gara, phụ tùng, má phanh, **lốp** (cân lốp, làm lốp, thay/vá/đắp lốp). Chủ xe xác nhận lốp thuộc sửa xe, **không** tách loại Lốp riêng |
-| Bảo dưỡng - nhớt | thay nhớt, lọc dầu, lọc gió |
-| Rửa xe - vệ sinh | rửa xe |
-| Khác | có vẻ là chi cho xe nhưng không rõ loại, đặt `Cần kiểm tra` |
+| Dầu | dầu, DO, đổ dầu, xăng, cây xăng, petrolimex, lít |
+| Sửa chữa | sửa, sửa xe, thay, hàn, ốp, gara, phụ tùng, phanh, má phanh, bơm, linh tinh; **lốp**: lốp, vỏ, ruột, cân lốp, làm lốp, vá lốp, đắp lốp; **bảo dưỡng**: nhớt, thay nhớt, bảo dưỡng, lọc dầu, lọc gió; rửa xe |
+| Khác | các khoản chi cho xe không phải dầu hay sửa chữa: **đăng kiểm, bảo hiểm, phí đường bộ, GPS, lương...**; ghi rõ ở Nội dung. Khoản không rõ là gì thì đánh dấu Cần kiểm tra |
 
-- DANH_MUC còn các loại **chưa dùng**: Phí BOT - cầu đường, CSGT - phạt, Ăn uống - công tác, Bốc xếp. Không xóa các loại này, để dành cho lúc chủ xe muốn bật lên.
-- Gặp khoản chi thuộc loại chưa dùng hoặc không liên quan đến xe: **không nhập** vào CHI. Liệt kê các khoản đó trong phần báo lại cho chủ xe để chủ xe quyết định có thêm loại chi mới hay không.
-- Khi chủ xe bổ sung loại chi mới, Claude phải: thêm dòng vào bảng trên, thêm vào DANH_MUC trong Excel kèm từ khóa nhận diện, và ghi lại ở mục 7 Nhật ký của README.
+- Chủ xe đã xác nhận: lốp, nhớt, bảo dưỡng và rửa xe đều tính vào **Sửa chữa**.
+- Các khoản như BOT, CSGT, ăn uống, bốc xếp: hiện **không nhập**. Liệt kê trong phần báo lại để chủ xe quyết định.
+- **Khi chủ xe thêm loại chi mới:** (1) thêm dòng vào bảng trên; (2) thêm vào danh sách data validation cột B của CHI; (3) thêm 1 dòng loại đó trong khối CHI ở TONG_HOP, ngay trên dòng "Chi cố định", dùng công thức giống dòng Dầu; (4) ghi vào Nhật ký của README.
 
-## 7. Không nhập vào CHI: chi cố định và tạm ứng
+## 7. Không có chi cố định riêng
 
-- Chi cố định (lương, trả góp, bảo hiểm, đăng kiểm, phí đường bộ, GPS...) và tạm ứng: **cuối tháng chủ xe gửi một file riêng**. Claude dùng file đó để cập nhật sheet **CHI_CO_DINH** và **TAM_UNG**. Không suy ra các khoản này từ tin nhắn Zalo.
-- Nếu tài xế gửi những khoản này trong Zalo thì không nhập vào CHI, chỉ báo lại cho chủ xe biết.
-- Lần đầu nhận file này, ghi lại mẫu file (tên file, thư mục lưu, các cột) vào đây để những lần sau làm theo.
+- Chủ xe xác nhận (03/10/2026): **không có sheet chi cố định**. Đăng kiểm, bảo hiểm, phí đường bộ... phát sinh tháng nào thì ghi vào **CHI** đúng ngày trả của tháng đó, loại `Khác` (mục 6). Không chia 12 hay phân bổ.
+- Cuối tháng chủ xe có thể gửi file các khoản này. Nhập từng khoản thành 1 dòng CHI. Lần đầu nhận file thì ghi lại mẫu file vào đây.
+- Tạm ứng không phải chi phí nên không nhập. Nếu chủ xe muốn theo dõi thì hỏi lại trước khi thêm gì vào file.
 
-## 8. Chốt tháng
+## 8. Thu và chốt tháng
 
 ### Mẫu file thu của kế toán (từ tháng 9/2026)
 
 - Tên file do kế toán đặt, ví dụ `trạm hương giang tháng 9.2026.xlsx`. **Không đổi tên file**, nhận diện theo cụm "tháng <m>.<yyyy>".
-- Sheet đầu tiên tên `CƯỚC 40008`. Hàng 2 là tiêu đề, dữ liệu bắt đầu từ hàng 3. Thứ tự cột giống sheet THU: B Ngày, C Phiếu, D Số xe, E Xuất bãi, F Hàng trừ, G Còn lại (công thức), H Đơn giá, I Thành tiền (công thức), J Ghi chú.
+- Sheet đầu tiên tên `CƯỚC 40008`. Hàng 2 là tiêu đề, dữ liệu bắt đầu từ hàng 3: B Ngày, C Phiếu, D Số xe, E Xuất bãi, F Hàng trừ, G Còn lại (công thức), H Đơn giá, I Thành tiền (công thức), J Ghi chú.
 - Cột Phiếu lúc là số, lúc là chữ, nên đổi hết sang số khi nhập.
 - Có các dòng STT để trống (chỉ có công thức) và dòng tổng ở cuối, trong đó cột Ngày là công thức liên kết ra file khác. **Chỉ lấy dòng có Ngày là ngày thật và có số Xuất bãi.**
 - Đơn giá tháng 9/2026: 73.000 đ/tấn.
-- Có thể có nhiều file thu trong một tháng (nhiều trạm/nguồn). Nhập lại một file thì chỉ thay các dòng của **chính file đó** (đối chiếu theo Ngày + Phiếu), không xóa dòng của file khác.
+
+### Ghi vào sheet THU
+
+- Cột: A Ngày, B Phiếu, C Tấn, D Đơn giá, E Thành tiền (công thức, không ghi đè), F Nguồn / Ghi chú.
+- **Tấn = Xuất bãi − Hàng trừ.** Nếu có Hàng trừ thì ghi ở cột F, ví dụ `Trạm Hương Giang; trừ 0,5 tấn`.
+- Cột F ghi tên trạm, ví dụ `Trạm Hương Giang`.
+- Có thể có nhiều file thu trong một tháng (nhiều trạm hoặc nguồn). Nhập lại một file thì chỉ thay các dòng của **chính file đó** (đối chiếu theo Ngày + Phiếu), không xóa dòng của file khác.
 
 ### Thu chủ xe báo bằng lời (không có file)
 
 - Ví dụ: "9 xe không rõ ngày, tổng 22400 kg, nhân giá 13". Hiểu là **tổng** số kg của cả 9 chuyến, đổi ra tấn (22,4), đơn giá 13.000 đ/tấn (tương đương 13 đ/kg).
-- Ghi **1 dòng gộp**, không chia ra từng chuyến. Không có ngày thì ghi ngày cuối tháng, để trống Phiếu. Cột K ghi số chuyến, tổng kg, "chủ xe báo <ngày>" và lý do chọn ngày đó.
-- Dòng từ file kế toán thì cột K ghi tên trạm, ví dụ `Trạm Hương Giang`.
-- Lưu ý: ô "Số phiếu" ở TONG_HOP đếm theo dòng, nên dòng gộp chỉ được tính là 1.
+- Ghi **1 dòng gộp**, không chia ra từng chuyến. Không có ngày thì ghi ngày cuối tháng, để trống Phiếu. Cột F ghi số chuyến và tổng kg.
+- Lưu ý: "Số chuyến (dòng)" ở TONG_HOP đếm theo dòng, nên dòng gộp chỉ được tính là 1.
 
-### Các bước
+### Các bước chốt tháng
 
-1. Đưa file thu trong `Thu/` vào sheet THU. Nếu chủ xe đã gửi file chi cố định và tạm ứng thì cập nhật CHI_CO_DINH và TAM_UNG (mục 7).
+1. Đưa file thu trong `Thu/` vào sheet THU. Nếu chủ xe gửi file các khoản đăng kiểm, bảo hiểm... thì nhập vào CHI (mục 7).
 2. Rà soát và báo các điểm bất thường: dầu chiếm bao nhiêu % doanh thu, chi phí/tấn so với tháng trước. Dầu tính theo ngày đổ, **không** chia lại theo tháng dù có đổ cuối tháng dùng sang tháng sau. Nhắc chủ xe nếu tháng đó mới có 1 file thu (có thể còn thu từ nguồn khác).
 3. Soạn tin tóm tắt chi trong tháng để chủ xe gửi vào nhóm Zalo cho tài xế xác nhận.

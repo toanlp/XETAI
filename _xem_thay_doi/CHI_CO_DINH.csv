@@ -1,7 +1,0 @@
-﻿Dòng,Khoản chi,Số tiền (đ),Chu kỳ,Áp dụng từ,Đến (trống = còn),Ghi chú
-5,Lương tài xế (phần cứng),,Tháng,01/01/2026,,Nếu lương theo chuyến thì nhập ở sheet CHI
-6,Trả góp / lãi vay xe,,Tháng,01/01/2026,,
-7,Bảo hiểm xe,,Năm,01/01/2026,,Nhập phí cả năm
-8,Đăng kiểm,,Năm,01/01/2026,,Nhập phí cả năm (hoặc theo chu kỳ đăng kiểm quy ra năm)
-9,Phí bảo trì đường bộ,,Năm,01/01/2026,,
-10,GPS / phù hiệu / camera,,Năm,01/01/2026,,
