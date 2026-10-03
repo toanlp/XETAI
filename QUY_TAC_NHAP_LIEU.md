@@ -63,8 +63,7 @@ Hiện tại sheet CHI **chỉ ghi các khoản chi trực tiếp cho xe**:
 | Loại chi đang dùng (đúng tên trong DANH_MUC) | Ví dụ |
 |---|---|
 | Dầu | đổ dầu, phiếu dầu, hóa đơn cây xăng |
-| Sửa chữa | sửa, hàn, gara, phụ tùng, má phanh |
-| Lốp | thay lốp, vá lốp, đắp lốp |
+| Sửa chữa | sửa, hàn, gara, phụ tùng, má phanh, **lốp** (cân lốp, làm lốp, thay/vá/đắp lốp). Chủ xe xác nhận lốp thuộc sửa xe, **không** tách loại Lốp riêng |
 | Bảo dưỡng - nhớt | thay nhớt, lọc dầu, lọc gió |
 | Rửa xe - vệ sinh | rửa xe |
 | Khác | có vẻ là chi cho xe nhưng không rõ loại, đặt `Cần kiểm tra` |
@@ -89,6 +88,13 @@ Hiện tại sheet CHI **chỉ ghi các khoản chi trực tiếp cho xe**:
 - Có các dòng STT để trống (chỉ có công thức) và dòng tổng ở cuối, trong đó cột Ngày là công thức liên kết ra file khác. **Chỉ lấy dòng có Ngày là ngày thật và có số Xuất bãi.**
 - Đơn giá tháng 9/2026: 73.000 đ/tấn.
 - Có thể có nhiều file thu trong một tháng (nhiều trạm/nguồn). Nhập lại một file thì chỉ thay các dòng của **chính file đó** (đối chiếu theo Ngày + Phiếu), không xóa dòng của file khác.
+
+### Thu chủ xe báo bằng lời (không có file)
+
+- Ví dụ: "9 xe không rõ ngày, tổng 22400 kg, nhân giá 13". Hiểu là **tổng** số kg của cả 9 chuyến, đổi ra tấn (22,4), đơn giá 13.000 đ/tấn (tương đương 13 đ/kg).
+- Ghi **1 dòng gộp**, không chia ra từng chuyến. Không có ngày thì ghi ngày cuối tháng, để trống Phiếu. Cột K ghi số chuyến, tổng kg, "chủ xe báo <ngày>" và lý do chọn ngày đó.
+- Dòng từ file kế toán thì cột K ghi tên trạm, ví dụ `Trạm Hương Giang`.
+- Lưu ý: ô "Số phiếu" ở TONG_HOP đếm theo dòng, nên dòng gộp chỉ được tính là 1.
 
 ### Các bước
 

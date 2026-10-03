@@ -12,7 +12,7 @@ OUT = os.path.join(ROOT, "_xem_thay_doi")
 
 # sheet: (hàng tiêu đề, dòng dữ liệu cuối, các cột xuất)
 SHEETS = {
-    "THU":         (4, 1004, "ABCDEFH"),
+    "THU":         (4, 1004, "ABCDEFHK"),
     "CHI":         (4, 1004, "ABDEGHIJKLMNOP"),
     "CHI_CO_DINH": (4, 34,   "ABCDEG"),
     "TAM_UNG":     (4, 504,  "ACDE"),

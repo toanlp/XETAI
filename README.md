@@ -40,7 +40,7 @@ Xe 75A-40008/
 | Sheet | Hàng tiêu đề | Dữ liệu | Cột nhập tay | Cột công thức |
 |---|---|---|---|---|
 | TONG_HOP | – | – | C4 = Năm, C5 = Tháng | Phần còn lại; bảng 12 tháng ở F9:J22, biểu đồ đặt tại F25 |
-| THU | 4 | 5–1004 | A STT, B Ngày, C Phiếu, D Số xe, E Xuất bãi, F Hàng trừ, H Đơn giá | G Còn lại, I Thành tiền, J Tháng |
+| THU | 4 | 5–1004 | A STT, B Ngày, C Phiếu, D Số xe, E Xuất bãi, F Hàng trừ, H Đơn giá, K Nguồn / Ghi chú | G Còn lại, I Thành tiền, J Tháng |
 | CHI | 4 | 5–1004 | A STT, B Ngày, D Số xe, E Loại chi, G Nội dung, H Số lít, I Đơn giá, J Số tiền, K Km, L Người chi, M Nguồn, N File chứng từ, O Trạng thái, P Ghi chú | C Tháng, F Nhóm |
 | CHI_CO_DINH | 4 | 5–34 | A–E, G | F Tiền/tháng (khoản theo năm thì chia 12) |
 | TAM_UNG | 4 | 5–504 | A Ngày, C Số tiền, D Hình thức, E Ghi chú | B Tháng |
@@ -97,7 +97,7 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 
 - [x] Dựng thư mục, file Excel, hướng dẫn và quy tắc nhập liệu.
 - [x] Đã xóa dòng ví dụ. CHI có 11 dòng chi tháng 9 (dòng 5–15, tổng 43.090.000 đ) do chủ xe nhập thô, chưa có ảnh chứng từ.
-- [x] THU có 20 chuyến tháng 9 từ file trạm Hương Giang (696,6 tấn, 50.851.800 đ). Chủ xe sẽ gửi thêm file thu từ nguồn khác của tháng 9.
+- [x] THU tháng 9: 20 chuyến trạm Hương Giang (696,6 tấn, 50.851.800 đ) + 1 dòng gộp 9 chuyến không rõ ngày (22,4 tấn × 13.000 = 291.200 đ). Tổng thu T9: 51.143.000 đ.
 - [ ] CHI_CO_DINH và TAM_UNG đang trống. Cuối tháng chủ xe sẽ gửi file riêng để cập nhật, chưa biết mẫu file.
 - [x] Đã cài Python 3.12 và openpyxl tại `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`. Lệnh `python` trong PATH vẫn trỏ vào lối tắt Store, và máy không có `py`, nên luôn gọi Python theo đường dẫn đầy đủ.
 - [ ] Chưa chạy thử với ảnh và tin nhắn Zalo thật của tháng 9.
@@ -113,3 +113,4 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 03/10/2026 | Sheet CHI chỉ ghi chi phí xe (Dầu, Sửa chữa, Lốp, Bảo dưỡng - nhớt, Rửa xe, Khác; BOT/CSGT/Ăn uống/Bốc xếp giữ trong DANH_MUC nhưng chưa dùng), khoản ngoài phạm vi thì báo chủ xe. Chi cố định và tạm ứng lấy từ file chủ xe gửi cuối tháng. QUY_TAC thêm mục 6–7, chốt tháng chuyển sang mục 8 | Chủ xe yêu cầu
 | 03/10/2026 | Nhập 11 khoản chi tháng 9. QUY_TAC: thêm nguồn "chủ xe nhập thô", bỏ ngưỡng 5tr với dầu (thay bằng ngưỡng 12tr/lần). DANH_MUC: thêm từ khóa cân lốp, làm lốp, sửa xe, phanh, ốp, linh tinh | Chủ xe gửi danh sách chi tháng 9; dầu 5–10tr/lần là bình thường
 | 03/10/2026 | Nhập thu tháng 9 (20 chuyến) từ file trạm Hương Giang. Thu có thể nhiều file/nguồn. Bỏ tính tiêu hao dầu; dầu tính theo ngày đổ. Thêm `_cong_cu/xuat_csv.py` + `_xem_thay_doi/` + git để chủ xe xem thay đổi trong VS Code | Chủ xe trả lời rà soát tháng 9 và muốn xem được thay đổi |
+| 03/10/2026 | Gộp loại Lốp vào Sửa chữa (CHI + DANH_MUC). THU thêm cột K "Nguồn / Ghi chú"; thêm dòng 9 chuyến không rõ ngày (22,4 tấn, 13.000 đ/tấn) | Chủ xe: lốp thuộc sửa xe; có thu nguồn khác không rõ ngày |
