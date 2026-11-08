@@ -11,6 +11,17 @@
 - **Thu:** kế toán lập file Excel ghi sản lượng xuất bãi từng ngày, gồm Ngày, Phiếu, Số xe, Xuất bãi, Hàng trừ, Còn lại, Đơn giá, Thành tiền. Thu là cước chở hàng, nhưng **có thể có nhiều file** (ngoài trạm Hương Giang còn chuyến khác, chủ xe sẽ gửi bổ sung). Mỗi file thu nhập thêm vào THU, không thay thế file khác.
 - **Chi:** tài xế gửi chi phí phát sinh vào **nhóm chat Zalo**, khi thì bằng tin nhắn chữ, khi thì bằng ảnh hóa đơn. Các khoản thường gặp: dầu, sửa xe, CSGT, BOT...
   - Tài xế **không** điền form và **không** làm theo cú pháp nào. Đừng đề xuất thay đổi cách tài xế gửi.
+- **Bảng tổng kết của kế toán khác (từ tháng 9/2026):** một kế toán khác tổng kết cả tháng thành 1 bảng (ảnh): toàn bộ chuyến + dầu, sửa xe, đi đường, lương, thuế, lãi, CÒN LẠI. **Chủ xe nhận phần CÒN LẠI và đóng vai người xác nhận lại** bảng này: đối chiếu với file trạm/phiếu cân, tin nhắn + ảnh Zalo tài xế, số chủ xe tự ghi; đầu ra là **danh sách sai lệch gửi kế toán**. Bảng này là nguồn đầy đủ nhất của tháng; cách nhập ở QUY_TAC mục 9, ghi chú đối chiếu từng tháng ở `Doi_chieu/yyyy-mm.md`.
+- **Các bên (chủ xe giải thích 08/11/2026):**
+  - **Phát Huy** = công ty của **O Lý**; xe chạy dưới tên công ty này. O Lý **góp vốn chủ xe** cùng toanlp. Kế toán lập bảng tổng kết là kế toán bên O Lý. Trong bảng, "o lí chi" / "Phát Huy trả" / "cty đổ" đều là phía O Lý trả.
+  - **Dì Lộc** = mẹ của toanlp. Tài xế ứng tiền qua dì Lộc.
+  - **Tài xế:** anh Lý ("Lương A Lý 43ch"), khác O Lý.
+  - Phần CÒN LẠI: tạm thời **không** cần tính chia giữa chủ xe và O Lý.
+  - **Hiệp, Huy** = kế toán của 2 bãi nhập hàng (Hào Hưng). Bãi Huy = file trạm Hương Giang; bãi Hiệp có phiếu/file riêng.
+  - **Chở ngoài** (Ý Mỹ, Đà Nẵng...) = chuyến không vào bãi Hiệp/Huy, bên mình vẫn thu.
+  - **CA** = phí công an. **Vé** chưa rõ (có thể là vé cân xe), khác "Phí qua trạm".
+  - **Lãi tháng** = lãi vay mua xe, không cố định (chủ xe gửi sau).
+  - Bảng tổng kết thường có vào **ngày 5 tháng sau**. Chủ xe không có hạn chót, chỉ xác nhận kế toán làm đúng hay sai.
 - **Mục tiêu:** mỗi tháng biết được thu bao nhiêu, chi bao nhiêu, lãi bao nhiêu.
 - **Cách làm đã chọn:** chủ xe lưu ảnh và tin nhắn Zalo vào thư mục. Claude đọc, phân loại và ghi vào Excel. Chủ xe chỉ duyệt lại các dòng "Cần kiểm tra".
 
@@ -24,7 +35,8 @@ Xe 75A-40008/
 ├── QUY_TAC_NHAP_LIEU.md     ← "skill" nhập liệu, LUÔN cập nhật khi có kiểu dữ liệu mới
 ├── HUONG_DAN.md             ← hướng dẫn cho chủ xe (người đọc)
 ├── QuanLyXe_75A40008.xlsx   ← file dữ liệu chính
-├── Thu/                     ← file thu kế toán gửi, giữ nguyên tên kế toán đặt (vd "trạm hương giang tháng 9.2026.xlsx")
+├── Thu/                     ← file thu, giữ nguyên tên kế toán đặt. Tháng 9 để thẳng trong Thu/; từ tháng 10 để trong Thu/yyyy-mm/ (bảng tổng kết kế toán, file bãi Hiệp, trạm Hương Giang, phiếu cân, lãi vay)
+├── Doi_chieu/yyyy-mm.md     ← ghi chú đối chiếu với bảng tổng kết của kế toán, điểm cần kiểm tra
 ├── _cong_cu/xuat_csv.py     ← xuất các sheet ra CSV để xem thay đổi
 ├── _xem_thay_doi/*.csv      ← bản CSV của THU, CHI (chỉ cột nhập tay)
 └── Chi/
@@ -93,17 +105,17 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 
 ## 6. Trạng thái hiện tại
 
-*Cập nhật lần cuối: 03/10/2026*
+*Cập nhật lần cuối: 08/11/2026*
 
 - [x] Dựng thư mục, file Excel, hướng dẫn và quy tắc nhập liệu.
-- [x] File Excel đã làm gọn (3 sheet). CHI có 11 dòng chi tháng 9 (dòng 5–15): Dầu 40.400.000, Sửa chữa 2.690.000, tổng 43.090.000 đ. Chủ xe nhập thô, chưa có ảnh chứng từ.
-- [x] THU tháng 9: 20 chuyến trạm Hương Giang (696,6 tấn, 50.851.800 đ) + 1 dòng gộp 9 chuyến không rõ ngày (22,4 tấn × 13.000 = 291.200 đ). Tổng thu T9: 51.143.000 đ.
+- [x] File Excel đã làm gọn (3 sheet).
+- [x] **Tháng 9 đã nhập lại theo bảng tổng kết của kế toán (08/11/2026), CHƯA kiểm tra.** THU 43 chuyến (dòng 5–47), 1.394,28 tấn, 108.546.360 đ. CHI 23 dòng (5–27): Dầu 38.600.000, Sửa chữa 3.110.000, Khác 36.626.000, tổng 78.336.000. Lợi nhuận 30.210.360 = đúng "CÒN LẠI" của kế toán. Khác khớp bảng nhưng điểm cần kiểm tra ghi ở `Doi_chieu/2026-09.md`.
 - [x] Không có chi cố định riêng: đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh. Không theo dõi tạm ứng.
 - [x] Đã cài Python 3.12 và openpyxl tại `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`. Lệnh `python` trong PATH vẫn trỏ vào lối tắt Store, và máy không có `py`, nên luôn gọi Python theo đường dẫn đầy đủ.
 - [ ] Chưa chạy thử với ảnh và tin nhắn Zalo thật của tháng 9.
 - [ ] Chưa đặt tác vụ tự chạy hằng tuần. Dự định làm sau 2–3 tuần chạy ổn, vào tối Chủ nhật, và cần máy tính đang bật.
 
-**Việc tiếp theo:** chờ chủ xe gửi thêm thu/chi tháng 9 nếu có, sau đó chốt lại tháng 9. Tháng 10 chủ xe sẽ nhập chi thô như tháng 9.
+**Việc tiếp theo:** khi chủ xe muốn, kiểm tra tháng 9 theo `Doi_chieu/2026-09.md` mục 3. Tháng 10: chờ bảng tổng kết của kế toán và/hoặc chi thô của chủ xe. Câu hỏi đang mở: có tách loại Khác (36,6tr) thành Lương / Đi đường / Thuế / Lãi không.
 
 ## 7. Nhật ký thay đổi
 
@@ -117,3 +129,4 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 03/10/2026 | Làm gọn Excel: 7 sheet → 4 (TONG_HOP, THU, CHI, CO_DINH). Bỏ DANH_MUC, TAM_UNG, HUONG_DAN; CHI còn 5 cột, THU còn 6 cột; bỏ cột Tháng (TONG_HOP lọc theo khoảng ngày). Loại chi: Dầu / Sửa chữa / Khác (lốp, nhớt, rửa xe vào Sửa chữa). "Cần kiểm tra" chuyển thành tiền tố ở Ghi chú | Chủ xe thấy file quá chi tiết, muốn gọn |
 | 03/10/2026 | Bỏ luôn sheet CO_DINH (còn 3 sheet). Đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh, loại Khác | Chủ xe: không có phí cố định, phát sinh tháng nào ghi tháng đó |
 | 03/10/2026 | Dựng lại bản gọn với kiểu trình bày của bản cũ (Arial, tiêu đề/TỔNG/tiêu đề cột ở hàng 1–4, chữ xanh nhập tay, khối màu ở TONG_HOP, % DT, chỉ số /tấn) | Chủ xe chê bản gọn đầu tiên xấu |
+| 08/11/2026 | Nhập lại toàn bộ tháng 9 theo bảng tổng kết của kế toán (THU 43 chuyến, CHI 23 dòng, thêm lương/đi đường/thuế/lãi vào Khác). Bỏ dòng gộp 9 chuyến không rõ ngày, bỏ dầu 30/9 9,9tr, thêm dầu 6/9 8,1tr. Lưu ảnh bảng vào `Thu/`, thêm `Doi_chieu/`, QUY_TAC mục 9 | Chủ xe gửi bảng của kế toán khác; chủ xe là người xác nhận, tháng 9 chỉ nhập chưa kiểm tra |

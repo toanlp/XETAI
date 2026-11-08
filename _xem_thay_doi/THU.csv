@@ -1,22 +1,44 @@
 ﻿Dòng,Ngày,Phiếu,Tấn,Đơn giá (đ/tấn),Nguồn / Ghi chú
-5,01/09/2026,2,32.28,73000,Trạm Hương Giang
-6,02/09/2026,3,34.14,73000,Trạm Hương Giang
-7,04/09/2026,5,33.9,73000,Trạm Hương Giang
-8,06/09/2026,9,36.67,73000,Trạm Hương Giang
-9,06/09/2026,10,33.58,73000,Trạm Hương Giang
-10,07/09/2026,11,34.65,73000,Trạm Hương Giang
-11,10/09/2026,15,33.92,73000,Trạm Hương Giang
-12,11/09/2026,17,36.04,73000,Trạm Hương Giang
-13,16/09/2026,20,35.02,73000,Trạm Hương Giang
-14,16/09/2026,21,34.53,73000,Trạm Hương Giang
-15,18/09/2026,25,36.21,73000,Trạm Hương Giang
-16,19/09/2026,27,34.78,73000,Trạm Hương Giang
-17,22/09/2026,32,34.97,73000,Trạm Hương Giang
-18,23/09/2026,35,36.96,73000,Trạm Hương Giang
-19,24/09/2026,37,34.07,73000,Trạm Hương Giang
-20,26/09/2026,40,36.05,73000,Trạm Hương Giang
-21,27/09/2026,43,35.82,73000,Trạm Hương Giang
-22,28/09/2026,45,34.21,73000,Trạm Hương Giang
-23,28/09/2026,46,34.19,73000,Trạm Hương Giang
-24,29/09/2026,48,34.61,73000,Trạm Hương Giang
-25,30/09/2026,,22.4,13000,"9 chuyến không rõ ngày, tổng 22.400 kg"
+5,01/09/2026,,35.77,73000,Nam Đông (Hiệp) → Hào Hưng
+6,01/09/2026,2,32.28,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+7,02/09/2026,3,34.14,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+8,03/09/2026,,24.7,90000,Chở ngoài – Nam Đông → Ý Mỹ
+9,03/09/2026,,33.94,73000,Nam Đông (Hiệp) → Hào Hưng
+10,04/09/2026,,23.65,90000,Chở ngoài – Nam Đông → Ý Mỹ
+11,04/09/2026,5,33.9,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+12,05/09/2026,,32.65,73000,Nam Đông (Hiệp) → Hào Hưng
+13,05/09/2026,,33.81,73000,Nam Đông (Hiệp) → Hào Hưng
+14,06/09/2026,,34.14,73000,Nam Đông (Hiệp) → Hào Hưng
+15,06/09/2026,9,36.67,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+16,06/09/2026,10,33.58,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+17,07/09/2026,11,34.65,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+18,08/09/2026,,26.7,90000,Chở ngoài – Nam Đông → Ý Mỹ
+19,08/09/2026,,33.33,73000,Nam Đông (Hiệp) → Hào Hưng
+20,09/09/2026,,34.95,73000,Nam Đông (Hiệp) → Hào Hưng
+21,10/09/2026,15,33.92,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+22,11/09/2026,17,36.04,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+23,14/09/2026,,32.99,90000,Chở ngoài – Nam Đông → Ý Mỹ
+24,15/09/2026,,22.11,130000,Chở ngoài – Đà Nẵng → Năng Lượng Lson
+25,16/09/2026,20,35.02,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+26,16/09/2026,21,34.53,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+27,17/09/2026,,33.94,73000,Nam Đông (Hiệp) → Hào Hưng
+28,18/09/2026,,32.35,73000,Nam Đông (Hiệp) → Hào Hưng
+29,18/09/2026,25,36.21,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+30,19/09/2026,27,34.78,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+31,20/09/2026,,30.17,90000,Chở ngoài – Nam Đông → Ý Mỹ
+32,22/09/2026,,26,90000,Chở ngoài – Nam Đông → Ý Mỹ
+33,22/09/2026,32,34.97,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+34,23/09/2026,35,36.96,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+35,24/09/2026,,26.33,90000,Chở ngoài – Nam Đông → Ý Mỹ
+36,24/09/2026,,22.31,130000,Chở ngoài – Đà Nẵng → Ý Mỹ
+37,24/09/2026,37,34.07,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+38,25/09/2026,,35.81,73000,Nam Đông (Hiệp) → Hào Hưng
+39,26/09/2026,,32.54,73000,Nam Đông (Hiệp) → Hào Hưng
+40,26/09/2026,40,36.05,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+41,27/09/2026,43,35.82,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+42,28/09/2026,45,34.21,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+43,28/09/2026,46,34.19,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+44,29/09/2026,,27.6,90000,Chở ngoài – Nam Đông → Ý Mỹ
+45,29/09/2026,,31.09,73000,Nam Đông (Hiệp) → Hào Hưng
+46,29/09/2026,48,34.61,73000,Trạm Hương Giang – Nam Đông (Huy) → Hào Hưng
+47,30/09/2026,,30.8,90000,Chở ngoài – Nam Đông → Ý Mỹ

@@ -11,6 +11,7 @@ Cấu trúc file Excel xem ở README mục 3. **Chủ xe muốn file gọn**: k
 | Tin nhắn chữ copy từ Zalo | `Chi/<yyyy-mm>/tin_nhan.txt` |
 | Danh sách chủ xe gõ thô trong chat với Claude | Claude dán nguyên văn vào `Chi/<yyyy-mm>/tin_nhan.txt` (kèm dòng `# [ngày] Chủ xe nhập thô`) trước khi xử lý, để còn đối chiếu |
 | File thu của kế toán | `Thu/` |
+| Bảng tổng kết tháng của kế toán khác (ảnh) | Lưu vào `Thu/` tên `doanh thu xe 75A 40008 tháng mm.yyyy (kế toán tổng kết).png`, cách nhập ở mục 9 |
 
 ## 2. Các bước "cập nhật chi"
 
@@ -104,3 +105,26 @@ Danh sách chọn ở cột B của CHI nằm trong data validation (`"Dầu,S�
 1. Đưa file thu trong `Thu/` vào sheet THU. Nếu chủ xe gửi file các khoản đăng kiểm, bảo hiểm... thì nhập vào CHI (mục 7).
 2. Rà soát và báo các điểm bất thường: dầu chiếm bao nhiêu % doanh thu, chi phí/tấn so với tháng trước. Dầu tính theo ngày đổ, **không** chia lại theo tháng dù có đổ cuối tháng dùng sang tháng sau. Nhắc chủ xe nếu tháng đó mới có 1 file thu (có thể còn thu từ nguồn khác).
 3. Soạn tin tóm tắt chi trong tháng để chủ xe gửi vào nhóm Zalo cho tài xế xác nhận.
+
+## 9. Bảng tổng kết tháng của kế toán khác (từ tháng 9/2026)
+
+Kế toán khác gửi 1 ảnh tổng kết cả tháng. Chủ xe là người **xác nhận lại** bảng này. Bảng là nguồn đầy đủ nhất, nên khi có bảng thì **dữ liệu tháng đó lấy theo bảng** (thay dữ liệu thô đã nhập trước), còn chỗ khác nhau ghi vào `Doi_chieu/yyyy-mm.md`. Mẫu chi tiết và ví dụ: `Doi_chieu/2026-09.md` mục 1.
+
+**Bảng chuyến → THU** (1 chuyến 1 dòng, sắp theo ngày):
+- Cột "Khối lượng HH" hoặc "chở ngoài" là **kg** → Tấn = kg / 1000. CƯỚC ghi theo đ/kg (73, 90, 130) → Đơn giá = cước × 1000 đ/tấn.
+- Nguồn ghi `NƠI ĐI → NƠI Nhập`; chuyến cột "chở ngoài" thêm tiền tố `Chở ngoài – `. Chuyến "Nam Đông (Huy)" trùng file trạm Hương Giang: giữ Phiếu từ file trạm.
+- Kiểm tra: tổng Thành tiền = DOANH THU của bảng.
+
+**Khối tổng kết → CHI:**
+- Dầu cty đổ → `Dầu`, mỗi lần đổ 1 dòng (bảng DẦU). Sửa xe (tài xế chi và cty/"o Lí" chi) → `Sửa chữa`, mỗi khoản 1 dòng; khoản cty trả ghi chú `Phát Huy trả`.
+- Đi đường (bồi dưỡng, CA, vé, cân), lương tài xế, thuế, CA (dì Lộc), phí qua trạm, lãi → `Khác`, **gộp mỗi khoản 1 dòng ngày cuối tháng**, Nội dung ghi rõ (như tháng 9).
+- Kiểm tra: LỢI NHUẬN ở TONG_HOP = "CÒN LẠI" của bảng.
+- Quyết toán tài xế (lương, ứng, còn lại) và tạm ứng: không nhập Excel, chỉ ghi vào `Doi_chieu/yyyy-mm.md`.
+
+**Quy tắc rút ra (08/11/2026, chủ xe xác nhận):**
+- Cước cố định theo tuyến, ít đổi (trừ khi giá thị trường biến động): Nam Đông → Hào Hưng 73 đ/kg; Nam Đông → Ý Mỹ 90; Đà Nẵng → ... 130. Cước khác với tháng trước thì ghi vào điểm cần kiểm tra.
+- Lương khoán: chuyến vào bãi 350.000, chuyến chở ngoài 450.000; lương cứng 3.000.000/tháng.
+- Bồi dưỡng theo nơi nhập (cố định theo bãi): Hào Hưng 100.000; Đà Nẵng 200.000; Ý Mỹ chưa rõ (tháng 9 lúc 100k lúc 200k; chủ xe cũng không rõ → Claude tự tìm quy luật qua các tháng sau, chưa tìm ra thì đưa vào danh sách hỏi kế toán).
+- Thuế 4,5%: tháng 9 chỉ tính trên thu chuyến cước 73 (80.367.000). Chưa rõ cách tính, chờ tháng 10 để rút ra quy tắc.
+- Dầu đổ cuối tháng kế toán có thể tính sang tháng sau (dầu 30/9 9,9tr chuyển sang T10). Khi đối chiếu, khoản dầu thiếu trong tháng thì tìm ở tháng sau trước khi báo sai lệch.
+- **Đầu ra khi kiểm tra:** danh sách sai lệch để chủ xe gửi kế toán bên O Lý (nêu dòng, số kế toán ghi, số đúng theo nguồn, nguồn).
