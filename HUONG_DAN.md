@@ -17,6 +17,11 @@ Xe 75A-40008/
 
 Sang tháng mới, tạo thêm thư mục `Chi/<năm-tháng>/` có cấu trúc như trên, hoặc nhờ Claude tạo.
 
+## Làm ở nhiều máy
+
+- Mở dự án ở máy nào thì việc đầu tiên: **Source Control → Pull** (hoặc `git pull`).
+- Làm xong: **Commit + Push**. Không sửa file Excel ở 2 máy cùng lúc (file Excel không gộp được).
+
 ## Hằng tuần (khoảng 5 phút)
 
 1. Trên Zalo PC, mở nhóm chat và chọn các ảnh hóa đơn mới, chọn **Lưu về máy** vào `Chi/<năm-tháng>/anh/`.

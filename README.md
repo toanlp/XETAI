@@ -1,7 +1,7 @@
 # README – Dự án quản lý thu chi xe 75A 40008
 
 > **Dành cho Claude ở các phiên sau:** đọc file này trước khi làm bất cứ việc gì. Sau đó đọc tiếp `QUY_TAC_NHAP_LIEU.md`.
-> Đến cuối mỗi phiên, cập nhật mục **6. Trạng thái hiện tại** và mục **7. Nhật ký thay đổi**.
+> Đầu phiên chạy `git pull` (mục 8). Đến cuối mỗi phiên, cập nhật mục **6. Trạng thái hiện tại** và mục **7. Nhật ký thay đổi**.
 
 ---
 
@@ -38,6 +38,7 @@ Xe 75A-40008/
 ├── Thu/                     ← file thu, giữ nguyên tên kế toán đặt. Tháng 9 để thẳng trong Thu/; từ tháng 10 để trong Thu/yyyy-mm/ (bảng tổng kết kế toán, file bãi Hiệp, trạm Hương Giang, phiếu cân, lãi vay)
 ├── Doi_chieu/yyyy-mm.md     ← ghi chú đối chiếu với bảng tổng kết của kế toán, điểm cần kiểm tra
 ├── _cong_cu/xuat_csv.py     ← xuất các sheet ra CSV để xem thay đổi
+├── _cong_cu/nhap_t9_ketoan.py ← script đã nhập T9 từ bảng kế toán (mẫu, không chạy lại)
 ├── _xem_thay_doi/*.csv      ← bản CSV của THU, CHI (chỉ cột nhập tay)
 └── Chi/
     └── yyyy-mm/
@@ -61,8 +62,8 @@ Từ khóa phân loại nằm trong `QUY_TAC_NHAP_LIEU.md` mục 6 (không còn 
 **Cách thao tác kỹ thuật với file:**
 
 - Sửa bằng `openpyxl`, mở theo chế độ mặc định để giữ nguyên công thức. **Không lưu file sau khi mở bằng `data_only=True`.**
-- Python: `%LOCALAPPDATA%\Programs\Python\Python312\python.exe` (lệnh `python` trong PATH là lối tắt Store, không dùng được).
-- **Kiểm tra công thức:** máy có Excel nên dùng COM qua PowerShell (`New-Object -ComObject Excel.Application`, ẩn) mở **bản sao trong scratchpad**, `CalculateFull()`, đọc `.Text` của ô kết quả. Không có LibreOffice nên không chạy được `recalc.py`.
+- Python: **tùy máy** (xem mục 8). Máy nhà (Admin): `%LOCALAPPDATA%\Programs\Python\Python312\python.exe` (lệnh `python` trong PATH là lối tắt Store, không dùng được). Cần thư viện `openpyxl`. Trên Windows, in tiếng Việt ra màn hình thì đặt `PYTHONIOENCODING=utf-8`.
+- **Kiểm tra công thức:** nếu máy có Excel thì dùng COM qua PowerShell (`New-Object -ComObject Excel.Application`, ẩn) mở **bản sao trong scratchpad**, `CalculateFull()`, đọc `.Text` của ô kết quả. Không có LibreOffice nên không chạy được `recalc.py`.
 - Trước khi ghi, kiểm tra file khóa `~$QuanLyXe_75A40008.xlsx`. Nếu có thì Excel đang mở file, nhắc chủ xe đóng lại. Sao lưu file vào scratchpad trước khi sửa.
 
 **Quy trình xem thay đổi (chủ xe chọn ngày 03/10/2026):** chủ xe xem thay đổi bằng CSV + git trong VS Code (Source Control).
@@ -81,6 +82,7 @@ Từ khóa phân loại nằm trong `QUY_TAC_NHAP_LIEU.md` mục 6 (không còn 
 | "chốt tháng X" | Nhập thu từ `Thu/`, rà soát bất thường, soạn tin tóm tắt để gửi nhóm Zalo (mục 8 của QUY_TAC) |
 | Gửi file đăng kiểm, bảo hiểm… cuối tháng | Nhập từng khoản vào CHI, loại Khác (QUY_TAC mục 7) |
 | "tạo tháng mới" | Tạo `Chi/yyyy-mm/anh/` và `tin_nhan.txt`, copy nội dung từ file mẫu của tháng trước |
+| "đối chiếu tháng X" | Làm theo QUY_TAC mục 9: nhập bảng tổng kết kế toán từ `Thu/yyyy-mm/`, đối chiếu với file bãi/phiếu cân, Zalo, số chủ xe ghi; ghi `Doi_chieu/yyyy-mm.md`; soạn danh sách sai lệch gửi kế toán |
 | Hỏi số liệu | Đọc file Excel (stage lên rồi đọc bằng `data_only=True`, chỉ đọc, không lưu) và trả lời |
 
 ## 5. ⚠️ Luôn cập nhật "skill" nhập liệu
@@ -111,11 +113,11 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 - [x] File Excel đã làm gọn (3 sheet).
 - [x] **Tháng 9 đã nhập lại theo bảng tổng kết của kế toán (08/11/2026), CHƯA kiểm tra.** THU 43 chuyến (dòng 5–47), 1.394,28 tấn, 108.546.360 đ. CHI 23 dòng (5–27): Dầu 38.600.000, Sửa chữa 3.110.000, Khác 36.626.000, tổng 78.336.000. Lợi nhuận 30.210.360 = đúng "CÒN LẠI" của kế toán. Khác khớp bảng nhưng điểm cần kiểm tra ghi ở `Doi_chieu/2026-09.md`.
 - [x] Không có chi cố định riêng: đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh. Không theo dõi tạm ứng.
-- [x] Đã cài Python 3.12 và openpyxl tại `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`. Lệnh `python` trong PATH vẫn trỏ vào lối tắt Store, và máy không có `py`, nên luôn gọi Python theo đường dẫn đầy đủ.
+- [x] Máy nhà (Admin) đã cài Python 3.12 + openpyxl, có Excel. Máy khác: xem mục 8.
 - [ ] Chưa chạy thử với ảnh và tin nhắn Zalo thật của tháng 9.
 - [ ] Chưa đặt tác vụ tự chạy hằng tuần. Dự định làm sau 2–3 tuần chạy ổn, vào tối Chủ nhật, và cần máy tính đang bật.
 
-**Việc tiếp theo:** khi chủ xe muốn, kiểm tra tháng 9 theo `Doi_chieu/2026-09.md` mục 3. Tháng 10: chờ bảng tổng kết của kế toán và/hoặc chi thô của chủ xe. Câu hỏi đang mở: có tách loại Khác (36,6tr) thành Lương / Đi đường / Thuế / Lãi không.
+**Việc tiếp theo:** chủ xe sẽ bỏ file tháng 10 vào `Thu/2026-10/` (bảng tổng kết kế toán, file bãi Hiệp, trạm Hương Giang, phiếu cân, lãi vay) và `Chi/2026-10/` (ảnh, tin nhắn Zalo), rồi nhắn "đối chiếu tháng 10". Khi đối chiếu T10 nhớ: dầu 30/9 9,9tr phải có trong T10; rút quy tắc thuế 4,5% và bồi dưỡng chuyến Ý Mỹ. Kiểm tra tháng 9 (`Doi_chieu/2026-09.md` mục 3) làm khi chủ xe muốn. Câu hỏi đang mở: có tách loại Khác (36,6tr) thành Lương / Đi đường / Thuế / Lãi không.
 
 ## 7. Nhật ký thay đổi
 
@@ -130,3 +132,14 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 03/10/2026 | Bỏ luôn sheet CO_DINH (còn 3 sheet). Đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh, loại Khác | Chủ xe: không có phí cố định, phát sinh tháng nào ghi tháng đó |
 | 03/10/2026 | Dựng lại bản gọn với kiểu trình bày của bản cũ (Arial, tiêu đề/TỔNG/tiêu đề cột ở hàng 1–4, chữ xanh nhập tay, khối màu ở TONG_HOP, % DT, chỉ số /tấn) | Chủ xe chê bản gọn đầu tiên xấu |
 | 08/11/2026 | Nhập lại toàn bộ tháng 9 theo bảng tổng kết của kế toán (THU 43 chuyến, CHI 23 dòng, thêm lương/đi đường/thuế/lãi vào Khác). Bỏ dòng gộp 9 chuyến không rõ ngày, bỏ dầu 30/9 9,9tr, thêm dầu 6/9 8,1tr. Lưu ảnh bảng vào `Thu/`, thêm `Doi_chieu/`, QUY_TAC mục 9 | Chủ xe gửi bảng của kế toán khác; chủ xe là người xác nhận, tháng 9 chỉ nhập chưa kiểm tra |
+| 08/11/2026 | Ghi các bên liên quan (Phát Huy/O Lý, dì Lộc, Hiệp/Huy), quy tắc cước/lương/bồi dưỡng, tạo `Thu/2026-10/`, thêm lệnh "đối chiếu tháng X", mục 8 làm việc nhiều máy, lưu script nhập T9 vào `_cong_cu/` | Chủ xe trả lời câu hỏi vai trò; chuyển sang làm ở máy khác |
+
+## 8. Làm việc trên nhiều máy (từ 09/11/2026)
+
+Dự án nằm trên GitHub `toanlp/XETAI` (nhánh `master`). Chủ xe làm việc ở nhiều máy.
+
+- **Đầu phiên:** chạy `git pull` trước khi làm gì. Nếu git còn thay đổi chưa commit từ máy này, hỏi chủ xe trước.
+- **Cuối phiên:** nhắc chủ xe commit + push (hoặc làm khi chủ xe bảo). File Excel là file nhị phân, **không gộp được khi xung đột**: không sửa Excel trên 2 máy cùng lúc.
+- **Ghi nhớ của Claude (memory) chỉ nằm trên từng máy**, không theo git. Mọi điều quan trọng phải ghi vào README / QUY_TAC / `Doi_chieu/`, không chỉ trong memory.
+- **Máy mới, lần đầu:** tìm Python (`python --version`, `py --version`, hoặc đường dẫn ở mục 3); nếu không có thì cài Python 3.12 (python.org) rồi `pip install openpyxl`. Kiểm tra có Excel không (để kiểm tra công thức bằng COM); không có thì kiểm tra tổng bằng Python. Ghi đường dẫn Python của máy đó vào mục 3.
+- Đường dẫn thư mục dự án có thể khác giữa các máy: script trong `_cong_cu/` dùng đường dẫn tương đối, không ghi cứng.
