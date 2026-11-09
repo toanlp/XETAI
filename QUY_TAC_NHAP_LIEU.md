@@ -125,6 +125,15 @@ Kế toán khác gửi 1 ảnh tổng kết cả tháng. Chủ xe là người *
 - Cước cố định theo tuyến, ít đổi (trừ khi giá thị trường biến động): Nam Đông → Hào Hưng 73 đ/kg; Nam Đông → Ý Mỹ 90; Đà Nẵng → ... 130. Cước khác với tháng trước thì ghi vào điểm cần kiểm tra.
 - Lương khoán: chuyến vào bãi 350.000, chuyến chở ngoài 450.000; lương cứng 3.000.000/tháng.
 - Bồi dưỡng theo nơi nhập (cố định theo bãi): Hào Hưng 100.000; Đà Nẵng 200.000; Ý Mỹ chưa rõ (tháng 9 lúc 100k lúc 200k; chủ xe cũng không rõ → Claude tự tìm quy luật qua các tháng sau, chưa tìm ra thì đưa vào danh sách hỏi kế toán).
-- Thuế 4,5%: tháng 9 chỉ tính trên thu chuyến cước 73 (80.367.000). Chưa rõ cách tính, chờ tháng 10 để rút ra quy tắc.
-- Dầu đổ cuối tháng kế toán có thể tính sang tháng sau (dầu 30/9 9,9tr chuyển sang T10). Khi đối chiếu, khoản dầu thiếu trong tháng thì tìm ở tháng sau trước khi báo sai lệch.
+- Thuế = **4,5% × thu chuyến vào bãi** (Hiệp + Huy, cước 73), không tính chở ngoài (đúng ở cả T9 và T10).
+- Cước Ý Mỹ T10 là 100 đ/kg (T9: 90). "Vé" trong bảng = phí qua trạm tài xế trả (118.000/lượt, sổ tài xế ghi "Qua trạm"); khác dòng "Phí qua trạm" của khối tổng kết.
+- Sửa xe "o Lí chi" có thể ghi "chưa trả ngày dd/mm": vẫn nhập CHI theo ngày kế toán ghi, ghi chú `Phát Huy trả`.
+- Dầu đổ cuối tháng kế toán có thể tính sang tháng sau (dầu 30/9 9,9tr chuyển sang T10). Khi đối chiếu, khoản dầu thiếu trong tháng thì tìm ở tháng sau trước khi báo sai lệch. Khoản như vậy ghi CHI ngày **01 của tháng kế toán tính**, Nội dung ghi "đổ ngày dd/mm", để LỢI NHUẬN từng tháng vẫn bằng CÒN LẠI.
+- Hóa đơn có thật nhưng không có trong bảng tháng đó (ví dụ gara 31/10 9,77tr): **không nhập** vào tháng đó, ghi vào danh sách sai lệch và tìm lại ở bảng tháng sau.
+
+**Nguồn tài xế gửi để đối chiếu (từ 09/11/2026):**
+- Sổ chuyến tài xế (ảnh): mỗi dòng ngày, nơi chở, kg, `BD` (bồi dưỡng); khoản chi viết xen giữa (CA, qua trạm, sửa xe). "Phú Bài" = Ý Mỹ; "Cầu Chày/Cầu đài" = Đà Nẵng; số trong ngoặc (450) = lương khoán chở ngoài. Trang cuối tổng kết: số chuyến, tiền ứng, tổng chi, còn lại.
+- Sổ nợ dầu ở cây xăng (Ngày, Số xe, Thành tiền, Ký nhận) + ảnh màn hình bơm Timemark (tiền, lít, đơn giá).
+- Hóa đơn sửa xe: Gara Tây La Sơn (Lộc Sơn), tiệm lốp An Tây, phụ tùng Định Loan. Số viết tắt "150.00", "1700" = 150.000, 1.700.000.
+- Lưu ảnh tên `yyyy-mm-dd_<nội dung>.png` vào `Chi/yyyy-mm/anh/` theo ngày trên ảnh.
 - **Đầu ra khi kiểm tra:** danh sách sai lệch để chủ xe gửi kế toán bên O Lý (nêu dòng, số kế toán ghi, số đúng theo nguồn, nguồn).

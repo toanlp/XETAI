@@ -1,0 +1,8 @@
+# Tin nhắn chi phí tháng 2026-11 – copy từ nhóm Zalo, dán vào CUỐI file.
+# Nên giữ cả dòng tên người gửi + giờ để biết ngày.
+# Ví dụ:
+#   [08:15 05/10] Tài xế: đổ dầu 2tr150 100L km 152300
+#   [17:40 05/10] Tài xế: CS 200k
+
+=== ĐÃ NHẬP ĐẾN ĐÂY ===
+

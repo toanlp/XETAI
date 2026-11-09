@@ -38,7 +38,7 @@ Xe 75A-40008/
 ├── Thu/                     ← file thu, giữ nguyên tên kế toán đặt. Tháng 9 để thẳng trong Thu/; từ tháng 10 để trong Thu/yyyy-mm/ (bảng tổng kết kế toán, file bãi Hiệp, trạm Hương Giang, phiếu cân, lãi vay)
 ├── Doi_chieu/yyyy-mm.md     ← ghi chú đối chiếu với bảng tổng kết của kế toán, điểm cần kiểm tra
 ├── _cong_cu/xuat_csv.py     ← xuất các sheet ra CSV để xem thay đổi
-├── _cong_cu/nhap_t9_ketoan.py ← script đã nhập T9 từ bảng kế toán (mẫu, không chạy lại)
+├── _cong_cu/nhap_t9_ketoan.py, nhap_t10_ketoan.py ← script đã nhập T9, T10 từ bảng kế toán (mẫu, không chạy lại)
 ├── _xem_thay_doi/*.csv      ← bản CSV của THU, CHI (chỉ cột nhập tay)
 └── Chi/
     └── yyyy-mm/
@@ -107,17 +107,19 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 
 ## 6. Trạng thái hiện tại
 
-*Cập nhật lần cuối: 08/11/2026*
+*Cập nhật lần cuối: 09/11/2026*
 
 - [x] Dựng thư mục, file Excel, hướng dẫn và quy tắc nhập liệu.
 - [x] File Excel đã làm gọn (3 sheet).
 - [x] **Tháng 9 đã nhập lại theo bảng tổng kết của kế toán (08/11/2026), CHƯA kiểm tra.** THU 43 chuyến (dòng 5–47), 1.394,28 tấn, 108.546.360 đ. CHI 23 dòng (5–27): Dầu 38.600.000, Sửa chữa 3.110.000, Khác 36.626.000, tổng 78.336.000. Lợi nhuận 30.210.360 = đúng "CÒN LẠI" của kế toán. Khác khớp bảng nhưng điểm cần kiểm tra ghi ở `Doi_chieu/2026-09.md`.
 - [x] Không có chi cố định riêng: đăng kiểm, bảo hiểm... ghi vào CHI tháng phát sinh. Không theo dõi tạm ứng.
 - [x] Máy nhà (Admin) đã cài Python 3.12 + openpyxl, có Excel. Máy khác: xem mục 8.
-- [ ] Chưa chạy thử với ảnh và tin nhắn Zalo thật của tháng 9.
-- [ ] Chưa đặt tác vụ tự chạy hằng tuần. Dự định làm sau 2–3 tuần chạy ổn, vào tối Chủ nhật, và cần máy tính đang bật.
+- [x] **Tháng 10 đã nhập theo bảng kế toán và đối chiếu (09/11/2026).** THU 47 chuyến (dòng 48–94), 116.796.540. CHI dòng 28–49 (+ dầu 02/11 2,2tr ở dòng 50). Lợi nhuận 5.854.540 = CÒN LẠI. 10 sai lệch/câu hỏi ở `Doi_chieu/2026-10.md` mục 3 (lớn nhất: chuyến Hiệp 26/10 ghi dư 3 tấn = 219.000; gara 31/10 9,77tr chưa có trong bảng).
+- [x] Tháng 9 đã kiểm tra bằng sổ tài xế (`Doi_chieu/2026-09.md` mục 4): 42 vs 43 chuyến, lãi T9 4,2tr trùng số "còn lại" của tài xế.
+- [ ] Ảnh bảng tổng kết T10 chưa lưu vào `Thu/2026-10/` (chủ xe dán vào chat, chưa có file).
+- [ ] Chưa đặt tác vụ tự chạy hằng tuần.
 
-**Việc tiếp theo:** chủ xe sẽ bỏ file tháng 10 vào `Thu/2026-10/` (bảng tổng kết kế toán, file bãi Hiệp, trạm Hương Giang, phiếu cân, lãi vay) và `Chi/2026-10/` (ảnh, tin nhắn Zalo), rồi nhắn "đối chiếu tháng 10". Khi đối chiếu T10 nhớ: dầu 30/9 9,9tr phải có trong T10; rút quy tắc thuế 4,5% và bồi dưỡng chuyến Ý Mỹ. Kiểm tra tháng 9 (`Doi_chieu/2026-09.md` mục 3) làm khi chủ xe muốn. Câu hỏi đang mở: có tách loại Khác (36,6tr) thành Lương / Đi đường / Thuế / Lãi không.
+**Việc tiếp theo:** chủ xe gửi danh sách sai lệch T9 + T10 cho kế toán bên O Lý, báo lại câu trả lời để sửa Excel. Khi đối chiếu T11: tìm gara 31/10 9.770.000; dầu 02/11 2,2tr đã nhập. Câu hỏi đang mở: có tách loại Khác thành Lương / Đi đường / Thuế / Lãi không; số lãi vay thật T9, T10.
 
 ## 7. Nhật ký thay đổi
 
@@ -133,6 +135,7 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 03/10/2026 | Dựng lại bản gọn với kiểu trình bày của bản cũ (Arial, tiêu đề/TỔNG/tiêu đề cột ở hàng 1–4, chữ xanh nhập tay, khối màu ở TONG_HOP, % DT, chỉ số /tấn) | Chủ xe chê bản gọn đầu tiên xấu |
 | 08/11/2026 | Nhập lại toàn bộ tháng 9 theo bảng tổng kết của kế toán (THU 43 chuyến, CHI 23 dòng, thêm lương/đi đường/thuế/lãi vào Khác). Bỏ dòng gộp 9 chuyến không rõ ngày, bỏ dầu 30/9 9,9tr, thêm dầu 6/9 8,1tr. Lưu ảnh bảng vào `Thu/`, thêm `Doi_chieu/`, QUY_TAC mục 9 | Chủ xe gửi bảng của kế toán khác; chủ xe là người xác nhận, tháng 9 chỉ nhập chưa kiểm tra |
 | 08/11/2026 | Ghi các bên liên quan (Phát Huy/O Lý, dì Lộc, Hiệp/Huy), quy tắc cước/lương/bồi dưỡng, tạo `Thu/2026-10/`, thêm lệnh "đối chiếu tháng X", mục 8 làm việc nhiều máy, lưu script nhập T9 vào `_cong_cu/` | Chủ xe trả lời câu hỏi vai trò; chuyển sang làm ở máy khác |
+| 09/11/2026 | Nhập + đối chiếu T10 (bảng kế toán, file bãi Hiệp, trạm Hương Giang, 27 ảnh tài xế). Kiểm tra T9 bằng sổ tài xế. Lưu ảnh vào `Chi/2026-09, 10, 11/anh/`, file thu vào `Thu/2026-10/`. QUY_TAC mục 9: quy tắc thuế, "vé" = qua trạm, dầu chuyển tháng ghi ngày 01, nguồn tài xế | Chủ xe gửi chi tài xế + bảng kế toán T10 |
 
 ## 8. Làm việc trên nhiều máy (từ 09/11/2026)
 
