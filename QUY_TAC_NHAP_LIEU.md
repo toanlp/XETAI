@@ -59,17 +59,19 @@ Cách đánh dấu: cột Ghi chú **bắt đầu bằng** `Cần kiểm tra: <l
 
 ## 6. Loại chi – chỉ chi phí của xe
 
-Danh sách chọn ở cột B của CHI nằm trong data validation (`"Dầu,Sửa chữa,Khác"`).
+Danh sách chọn ở cột B của CHI nằm trong data validation (`"Dầu,Sửa chữa,Lương, đi đường,Thuế, lãi,Khác"`). Tách từ 09/11/2026 (chủ xe để Claude chọn).
 
 | Loại chi | Từ khóa nhận diện |
 |---|---|
 | Dầu | dầu, DO, đổ dầu, xăng, cây xăng, petrolimex, lít |
 | Sửa chữa | sửa, sửa xe, thay, hàn, ốp, gara, phụ tùng, phanh, má phanh, bơm, linh tinh; **lốp**: lốp, vỏ, ruột, cân lốp, làm lốp, vá lốp, đắp lốp; **bảo dưỡng**: nhớt, thay nhớt, bảo dưỡng, lọc dầu, lọc gió; rửa xe |
-| Khác | các khoản chi cho xe không phải dầu hay sửa chữa: **đăng kiểm, bảo hiểm, phí đường bộ, GPS, lương...**; ghi rõ ở Nội dung. Khoản không rõ là gì thì đánh dấu Cần kiểm tra |
+| Lương, đi đường | lương tài xế, bồi dưỡng, CA (kể cả CA dì Lộc), vé, phí qua trạm, cân |
+| Thuế, lãi | thuế của cty (4,5%), lãi tháng (lãi vay) |
+| Khác | các khoản còn lại cho xe: **đăng kiểm, bảo hiểm, phí đường bộ, GPS...**; ghi rõ ở Nội dung. Khoản không rõ là gì thì đánh dấu Cần kiểm tra |
 
 - Chủ xe đã xác nhận: lốp, nhớt, bảo dưỡng và rửa xe đều tính vào **Sửa chữa**.
 - Các khoản như BOT, CSGT, ăn uống, bốc xếp: hiện **không nhập**. Liệt kê trong phần báo lại để chủ xe quyết định.
-- **Khi chủ xe thêm loại chi mới:** (1) thêm dòng vào bảng trên; (2) thêm vào danh sách data validation cột B của CHI; (3) thêm 1 dòng loại đó trong khối CHI ở TONG_HOP, ngay trên dòng "Chi cố định", dùng công thức giống dòng Dầu; (4) ghi vào Nhật ký của README.
+- **Khi chủ xe thêm loại chi mới:** (1) thêm dòng vào bảng trên; (2) thêm vào danh sách data validation cột B của CHI; (3) thêm 1 dòng loại đó trong khối CHI ở TONG_HOP (hiện dòng 14–18, TỔNG CHI 19, LỢI NHUẬN 21), dời các dòng bên dưới ở cột B:D xuống, sửa lại công thức TỔNG CHI/LỢI NHUẬN/CHỈ SỐ (xem `_cong_cu/tach_loai_chi.py`); (4) ghi vào Nhật ký của README.
 
 ## 7. Không có chi cố định riêng
 
@@ -117,9 +119,17 @@ Kế toán khác gửi 1 ảnh tổng kết cả tháng. Chủ xe là người *
 
 **Khối tổng kết → CHI:**
 - Dầu cty đổ → `Dầu`, mỗi lần đổ 1 dòng (bảng DẦU). Sửa xe (tài xế chi và cty/"o Lí" chi) → `Sửa chữa`, mỗi khoản 1 dòng; khoản cty trả ghi chú `Phát Huy trả`.
-- Đi đường (bồi dưỡng, CA, vé, cân), lương tài xế, thuế, CA (dì Lộc), phí qua trạm, lãi → `Khác`, **gộp mỗi khoản 1 dòng ngày cuối tháng**, Nội dung ghi rõ (như tháng 9).
+- Đi đường (bồi dưỡng, CA, vé, cân), lương tài xế, CA (dì Lộc), phí qua trạm → `Lương, đi đường`; thuế, lãi → `Thuế, lãi`. **Gộp mỗi khoản 1 dòng ngày cuối tháng**, Nội dung ghi rõ (như tháng 9).
 - Kiểm tra: LỢI NHUẬN ở TONG_HOP = "CÒN LẠI" của bảng.
 - Quyết toán tài xế (lương, ứng, còn lại) và tạm ứng: không nhập Excel, chỉ ghi vào `Doi_chieu/yyyy-mm.md`.
+
+**Cách đối chiếu (chủ xe dặn 09/11/2026):** so **2 phía** với nhau:
+- **Kế toán dì Lộc / o Lộc** (chủ xe gọi là "phía 1"): thu = 2 file bãi (bãi Hiệp `THÁNG mm. yyyyCL.xlsx`, bãi Huy `trạm hương giang tháng mm.yyyy.xlsx`, sheet `CƯỚC 40008`) + chuyến chở ngoài; chi = những gì tài xế gửi (sổ chuyến, sổ nợ dầu, ảnh bơm, hóa đơn).
+- **Chị Liên – bảng tổng hợp thu chi của kế toán chị Liên** (bên O Lý).
+- Excel luôn nhập **theo bảng kế toán**. Chủ xe gửi lỗi cho chị Liên; khi chị sửa, chủ xe gửi lại bảng mới thì nhập lại tháng đó.
+- Đối chiếu từng chuyến (ngày + phiếu + kg), từng lần dầu, từng hóa đơn; liệt kê "điều chưa đúng" (số kế toán / số đúng / nguồn / chênh) và tách riêng các khoản chưa có chứng từ.
+- Khoản có hóa đơn nhưng chị Liên chưa ghi trong tháng: để qua tháng sau, tìm lại khi có bảng tháng sau.
+- Cước chở ngoài (Ý Mỹ...) linh hoạt: **theo bảng kế toán**, không báo sai lệch.
 
 **Quy tắc rút ra (08/11/2026, chủ xe xác nhận):**
 - Cước cố định theo tuyến, ít đổi (trừ khi giá thị trường biến động): Nam Đông → Hào Hưng 73 đ/kg; Nam Đông → Ý Mỹ 90; Đà Nẵng → ... 130. Cước khác với tháng trước thì ghi vào điểm cần kiểm tra.
@@ -128,6 +138,7 @@ Kế toán khác gửi 1 ảnh tổng kết cả tháng. Chủ xe là người *
 - Thuế = **4,5% × thu chuyến vào bãi** (Hiệp + Huy, cước 73), không tính chở ngoài (đúng ở cả T9 và T10).
 - Cước Ý Mỹ T10 là 100 đ/kg (T9: 90). "Vé" trong bảng = phí qua trạm tài xế trả (118.000/lượt, sổ tài xế ghi "Qua trạm"); khác dòng "Phí qua trạm" của khối tổng kết.
 - Sửa xe "o Lí chi" có thể ghi "chưa trả ngày dd/mm": vẫn nhập CHI theo ngày kế toán ghi, ghi chú `Phát Huy trả`.
+- Lãi tháng ≈ **0,75% × dư nợ đầu tháng** (T9: 561.473.000 → 4,2tr; T10: 531.263.000 → 4,0tr). Dư nợ giảm mỗi tháng đúng bằng CÒN LẠI (chủ xe ghi tay, ảnh `Doi_chieu/anh/`). Theo dõi dư nợ ở README mục 1.
 - Dầu đổ cuối tháng kế toán có thể tính sang tháng sau (dầu 30/9 9,9tr chuyển sang T10). Khi đối chiếu, khoản dầu thiếu trong tháng thì tìm ở tháng sau trước khi báo sai lệch. Khoản như vậy ghi CHI ngày **01 của tháng kế toán tính**, Nội dung ghi "đổ ngày dd/mm", để LỢI NHUẬN từng tháng vẫn bằng CÒN LẠI.
 - Hóa đơn có thật nhưng không có trong bảng tháng đó (ví dụ gara 31/10 9,77tr): **không nhập** vào tháng đó, ghi vào danh sách sai lệch và tìm lại ở bảng tháng sau.
 

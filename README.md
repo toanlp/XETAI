@@ -12,9 +12,10 @@
 - **Chi:** tài xế gửi chi phí phát sinh vào **nhóm chat Zalo**, khi thì bằng tin nhắn chữ, khi thì bằng ảnh hóa đơn. Các khoản thường gặp: dầu, sửa xe, CSGT, BOT...
   - Tài xế **không** điền form và **không** làm theo cú pháp nào. Đừng đề xuất thay đổi cách tài xế gửi.
 - **Bảng tổng kết của kế toán khác (từ tháng 9/2026):** một kế toán khác tổng kết cả tháng thành 1 bảng (ảnh): toàn bộ chuyến + dầu, sửa xe, đi đường, lương, thuế, lãi, CÒN LẠI. **Chủ xe nhận phần CÒN LẠI và đóng vai người xác nhận lại** bảng này: đối chiếu với file trạm/phiếu cân, tin nhắn + ảnh Zalo tài xế, số chủ xe tự ghi; đầu ra là **danh sách sai lệch gửi kế toán**. Bảng này là nguồn đầy đủ nhất của tháng; cách nhập ở QUY_TAC mục 9, ghi chú đối chiếu từng tháng ở `Doi_chieu/yyyy-mm.md`.
+- **Dư nợ (vay mua xe), chủ xe ghi tay:** trước T9 561.473.000 − CÒN LẠI T9 30.210.000 = **531.263.000** (chưa trừ T10). Mỗi tháng CÒN LẠI trừ vào dư nợ; lãi tháng ≈ 0,75% dư nợ. Ảnh: `Doi_chieu/anh/no_con_lai_sau_T9.png`.
 - **Các bên (chủ xe giải thích 08/11/2026):**
-  - **Phát Huy** = công ty của **O Lý**; xe chạy dưới tên công ty này. O Lý **góp vốn chủ xe** cùng toanlp. Kế toán lập bảng tổng kết là kế toán bên O Lý. Trong bảng, "o lí chi" / "Phát Huy trả" / "cty đổ" đều là phía O Lý trả.
-  - **Dì Lộc** = mẹ của toanlp. Tài xế ứng tiền qua dì Lộc.
+  - **Phát Huy** = công ty của **O Lý**; xe chạy dưới tên công ty này. O Lý **góp vốn chủ xe** cùng toanlp. Kế toán lập bảng tổng kết là **chị Liên**, kế toán bên O Lý. Trong bảng, "o lí chi" / "Phát Huy trả" / "cty đổ" đều là phía O Lý trả.
+  - **Dì Lộc** (chủ xe cũng gọi **o Lộc**) = mẹ của toanlp. Tài xế ứng tiền qua dì Lộc. Dì Lộc là **kế toán phía chủ xe ("phía 1")**: giữ 2 file bãi + chi tài xế gửi, đối chiếu với bảng của chị Liên (QUY_TAC mục 9).
   - **Tài xế:** anh Lý ("Lương A Lý 43ch"), khác O Lý.
   - Phần CÒN LẠI: tạm thời **không** cần tính chia giữa chủ xe và O Lý.
   - **Hiệp, Huy** = kế toán của 2 bãi nhập hàng (Hào Hưng). Bãi Huy = file trạm Hương Giang; bãi Hiệp có phiếu/file riêng.
@@ -53,9 +54,9 @@ Xe 75A-40008/
 
 | Sheet | Cột | Ghi chú |
 |---|---|---|
-| TONG_HOP | C4 Năm, C5 Tháng (ô vàng), C6 kỳ báo cáo; THU B8:C11, CHI B13:D17 (Dầu 14, Sửa chữa 15, Khác 16, TỔNG CHI 17), LỢI NHUẬN 19, CHỈ SỐ 21–24; bảng 12 tháng F9:J22; biểu đồ F24 | Ẩn lưới. Toàn công thức, lọc theo khoảng ngày (`SUMIFS` với `>=đầu tháng`, `<đầu tháng sau`). Cột D = % doanh thu |
+| TONG_HOP | C4 Năm, C5 Tháng (ô vàng), C6 kỳ báo cáo; THU B8:C11, CHI B13:D19 (Dầu 14, Sửa chữa 15, Lương đi đường 16, Thuế lãi 17, Khác 18, TỔNG CHI 19), LỢI NHUẬN 21, CHỈ SỐ 23–26; bảng 12 tháng F9:J22; biểu đồ F24 | Ẩn lưới. Toàn công thức, lọc theo khoảng ngày (`SUMIFS` với `>=đầu tháng`, `<đầu tháng sau`). Cột D = % doanh thu |
 | THU | A Ngày, B Phiếu, C Tấn, D Đơn giá, **E Thành tiền (công thức)**, F Nguồn / Ghi chú | Tấn = xuất bãi − hàng trừ |
-| CHI | A Ngày, B Loại chi (chọn Dầu / Sửa chữa / Khác), C Nội dung, D Số tiền, E Ghi chú | E3 đếm "Cần kiểm tra". Ghi chú bắt đầu bằng "Cần kiểm tra" thì dòng tô cam |
+| CHI | A Ngày, B Loại chi (chọn Dầu / Sửa chữa / Lương, đi đường / Thuế, lãi / Khác), C Nội dung, D Số tiền, E Ghi chú | E3 đếm "Cần kiểm tra". Ghi chú bắt đầu bằng "Cần kiểm tra" thì dòng tô cam |
 
 Từ khóa phân loại nằm trong `QUY_TAC_NHAP_LIEU.md` mục 6 (không còn sheet DANH_MUC). `_cong_cu/tao_file_gon.py` là script đã dựng file này, xem khi cần sửa công thức TONG_HOP.
 
@@ -82,7 +83,7 @@ Từ khóa phân loại nằm trong `QUY_TAC_NHAP_LIEU.md` mục 6 (không còn 
 | "chốt tháng X" | Nhập thu từ `Thu/`, rà soát bất thường, soạn tin tóm tắt để gửi nhóm Zalo (mục 8 của QUY_TAC) |
 | Gửi file đăng kiểm, bảo hiểm… cuối tháng | Nhập từng khoản vào CHI, loại Khác (QUY_TAC mục 7) |
 | "tạo tháng mới" | Tạo `Chi/yyyy-mm/anh/` và `tin_nhan.txt`, copy nội dung từ file mẫu của tháng trước |
-| "đối chiếu tháng X" | Làm theo QUY_TAC mục 9: nhập bảng tổng kết kế toán từ `Thu/yyyy-mm/`, đối chiếu với file bãi/phiếu cân, Zalo, số chủ xe ghi; ghi `Doi_chieu/yyyy-mm.md`; soạn danh sách sai lệch gửi kế toán |
+| "đối chiếu tháng X" / "bảng so sánh" | Làm theo QUY_TAC mục 9, trình bày bảng so sánh dì Lộc ↔ chị Liên theo mẫu `Doi_chieu/2026-10.md` mục 5: nhập bảng tổng kết kế toán từ `Thu/yyyy-mm/`, đối chiếu với file bãi/phiếu cân, Zalo, số chủ xe ghi; ghi `Doi_chieu/yyyy-mm.md`; soạn danh sách sai lệch gửi kế toán |
 | Hỏi số liệu | Đọc file Excel (stage lên rồi đọc bằng `data_only=True`, chỉ đọc, không lưu) và trả lời |
 
 ## 5. ⚠️ Luôn cập nhật "skill" nhập liệu
@@ -119,7 +120,7 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 - [ ] Ảnh bảng tổng kết T10 chưa lưu vào `Thu/2026-10/` (chủ xe dán vào chat, chưa có file).
 - [ ] Chưa đặt tác vụ tự chạy hằng tuần.
 
-**Việc tiếp theo:** chủ xe gửi danh sách sai lệch T9 + T10 cho kế toán bên O Lý, báo lại câu trả lời để sửa Excel. Khi đối chiếu T11: tìm gara 31/10 9.770.000; dầu 02/11 2,2tr đã nhập. Câu hỏi đang mở: có tách loại Khác thành Lương / Đi đường / Thuế / Lãi không; số lãi vay thật T9, T10.
+**Việc tiếp theo:** khi có số tháng 11 thì trả lời các câu hỏi chờ ở `Doi_chieu/2026-10.md` mục 3 (sổ chuyến T10, phiếu cân Ý Mỹ, CA dì Lộc, phí qua trạm) và `Doi_chieu/2026-09.md` mục 4. Chủ xe gửi "điều chưa đúng" T9 + T10 cho chị Liên; chị sửa thì chủ xe gửi lại bảng, nhập lại tháng đó. Khi đối chiếu T11: tìm gara 31/10 9.770.000 (chị Liên chưa ghi T10); dầu 02/11 2,2tr đã nhập; dư nợ sau T10 = 531.263.000 − CÒN LẠI T10 (theo bảng cuối cùng).
 
 ## 7. Nhật ký thay đổi
 
@@ -136,6 +137,8 @@ Khi không chắc quy tắc mới có đúng không, **hỏi chủ xe trước**
 | 08/11/2026 | Nhập lại toàn bộ tháng 9 theo bảng tổng kết của kế toán (THU 43 chuyến, CHI 23 dòng, thêm lương/đi đường/thuế/lãi vào Khác). Bỏ dòng gộp 9 chuyến không rõ ngày, bỏ dầu 30/9 9,9tr, thêm dầu 6/9 8,1tr. Lưu ảnh bảng vào `Thu/`, thêm `Doi_chieu/`, QUY_TAC mục 9 | Chủ xe gửi bảng của kế toán khác; chủ xe là người xác nhận, tháng 9 chỉ nhập chưa kiểm tra |
 | 08/11/2026 | Ghi các bên liên quan (Phát Huy/O Lý, dì Lộc, Hiệp/Huy), quy tắc cước/lương/bồi dưỡng, tạo `Thu/2026-10/`, thêm lệnh "đối chiếu tháng X", mục 8 làm việc nhiều máy, lưu script nhập T9 vào `_cong_cu/` | Chủ xe trả lời câu hỏi vai trò; chuyển sang làm ở máy khác |
 | 09/11/2026 | Nhập + đối chiếu T10 (bảng kế toán, file bãi Hiệp, trạm Hương Giang, 27 ảnh tài xế). Kiểm tra T9 bằng sổ tài xế. Lưu ảnh vào `Chi/2026-09, 10, 11/anh/`, file thu vào `Thu/2026-10/`. QUY_TAC mục 9: quy tắc thuế, "vé" = qua trạm, dầu chuyển tháng ghi ngày 01, nguồn tài xế | Chủ xe gửi chi tài xế + bảng kế toán T10 |
+| 09/11/2026 | Tách loại Khác thành Lương, đi đường / Thuế, lãi / Khác (TONG_HOP dời xuống 2 dòng, `_cong_cu/tach_loai_chi.py`). Ghi dư nợ + quy tắc lãi 0,75%, cách đối chiếu 2 phía, kế toán = chị Liên | Chủ xe trả lời câu hỏi sau đối chiếu T10 |
+| 09/11/2026 | Phía 1 = kế toán dì Lộc (= o Lộc), phía 2 = chị Liên; mẫu bảng so sánh 4 nhóm; câu hỏi T10 chờ đến khi có số T11 | Chủ xe trả lời |
 
 ## 8. Làm việc trên nhiều máy (từ 09/11/2026)
 

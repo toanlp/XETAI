@@ -12,7 +12,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.chart import BarChart, Reference
 
 SRC, DST = sys.argv[1], sys.argv[2]
-LOAI_CHI = ["Dầu", "Sửa chữa", "Khác"]
+LOAI_CHI = ["Dầu", "Sửa chữa", "Lương, đi đường", "Thuế, lãi", "Khác"]
 FIRST, LAST = 5, 1004  # dòng dữ liệu
 
 # ---------- đọc dữ liệu cũ ----------
